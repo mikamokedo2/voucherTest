@@ -14,6 +14,10 @@ import {
 } from "../constants/const";
 import socketIOClient from "socket.io-client";
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
+import { useRouter } from "next/router";
+import en from '../locales/en';
+import vn from '../locales/vn';
+
 
 function numberWithCommas(x: any) {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
@@ -99,6 +103,10 @@ const Home: NextPage = () => {
   const [contractToken, setContractToken] = useState(null);
 
   const { executeRecaptcha } = useGoogleReCaptcha();
+  const router = useRouter();
+  const { locale } = router;
+  const t = locale === 'en' ? en : vn;
+  
 
   const reset = () => {
     setSelectVoucher("");
@@ -314,6 +322,13 @@ const Home: NextPage = () => {
     showHideConnectionPopup(popConnectRef, opened);
   }, [opened]);
 
+  const changeLanguage = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const locale = e.target.value;
+    router.push(router.pathname, router.asPath, { locale });
+    localStorage.setItem('locale', locale === 'en' ? 'en' : 'vi');
+  };
+  
+
   return (
     <div className={style.root}>
       <ToastContainer />
@@ -428,11 +443,27 @@ const Home: NextPage = () => {
       </div>
 
       <header className={style.header}>
+
         <div className="w-[30px]">
           <h3 className="font-bold text-[#fdd116] underline whitespace-nowrap cursor-pointer">
             {balance ? balance + " USDC" : ""}
           </h3>
         </div>
+        <div className="d-flex align-items-center">
+              <div className="body-04 mr-2">{t.selectLanguage}</div>
+              <select
+                onChange={changeLanguage}
+                defaultValue={locale}
+                id="gender"
+              >
+                <option className="body-04" value="vn">
+                  🇻🇳
+                </option>
+                <option className="body-04" value="en">
+                  🇺🇸
+                </option>
+              </select>
+            </div>
 
         <img
           src="/logo.png"
