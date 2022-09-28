@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  max-width: 375px;
+  margin: auto;
+  font-family: "Comfortaa", cursive !important;
+}
