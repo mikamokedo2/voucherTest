@@ -311,7 +311,7 @@ text-align: left;}
 @media screen and (max-width:991px){
     .mainContent{
         padding-bottom: 180px;
-
+        margin: 0;
     }
     .main_top img{
         height: 20vh;
