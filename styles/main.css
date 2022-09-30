@@ -288,7 +288,8 @@ text-align: left;}
     .mainContent{
           display: flex ;
         justify-content: space-between;
-        
+        max-width: 1320px;
+        margin: 0 auto;
     }
     .mainContent.noactive{
     display: none;
