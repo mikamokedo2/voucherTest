@@ -489,6 +489,10 @@ const Home: NextPage = () => {
           well as limited edition items. Participating in game application
           activities, buyers will have the right to decide to buy trendy
           products at the desired price without affecting the seller's profit.
+          Shopdi is an ecommerce platform specializing in high-end products as
+          well as limited edition items. Participating in game application
+          activities, buyers will have the right to decide to buy trendy
+          products at the desired price without affecting the seller's profit.
         </p>
       </div>
       <section
@@ -546,7 +550,7 @@ const Home: NextPage = () => {
               </div>
             </div>
           </div>
-          <p className="text-white font-medium text-[500] text-center py-[40px]">
+          <p className="text-white font-medium text-[500] text-center py-[32px]">
             {isPaid ? "Giao dịch thành công" : "Đang xử lý giao dich"}
             {err ? "Giao dịch thất bại" : ""}
           </p>
@@ -560,7 +564,7 @@ const Home: NextPage = () => {
             Voucher đến Email/Phone đến bạn khi giao dịch hoàn tất
           </p>
           <p
-            className={`px-[37px] text-white text-[14px] font-normal text-center mt-[40px] border-[#FDD116] ${
+            className={`px-[37px] text-white text-[14px] font-normal text-center  border-[#FDD116] ${
               isPaid ? "flex" : "hidden"
             }`}
           >
