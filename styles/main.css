@@ -133,10 +133,16 @@ margin-bottom: 24px;
 color: #F4F6F8;
 }
 .content p{
-    font-weight: 400;
-font-size: 16px;
-line-height: 135%;
+   font-weight: 400;
+font-size: 18px;
+line-height: 142%;
+letter-spacing: -0.5px;
+
 color: #F4F6F8;
+flex: none;
+order: 1;
+align-self: stretch;
+flex-grow: 0;
 }
 .content img{
     max-width: 300px;
@@ -259,10 +265,10 @@ text-align: left;}
     }
 }
 @media screen and (min-width:992px){
-    /* main{
-        display: flex !important;
-        justify-content: space-between;
-    } */
+    .content {
+        max-width: 650px;
+        margin: 0 auto;
+    }
     .mainContent{
           display: flex ;
         justify-content: space-between;
