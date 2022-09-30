@@ -105,8 +105,7 @@ cursor: pointer;
 }
 
 .seclecBox_item{
-
-padding: 12px 24px 12px 16px;
+padding: 12px 24px;
 gap: 10px;
 background: transparent;
 border: 2px solid #FDD116;
@@ -170,11 +169,12 @@ flex-grow: 0;
 .box_input {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 10px;
+    margin-bottom: 12px;
 }
 .box_input .coudown{
     display: flex;
     margin-left: 10px;
+    justify-content: space-between;
 }
 .box_input .coudown span{
     display: flex;
@@ -185,11 +185,10 @@ padding: 0px 16px;
 
 width: 46px;
 height: 40px;
-margin-right: 10px;
 font-weight: 600;
 font-size: 16px;
 line-height: 22px;
-
+cursor: pointer;
 /* Black & White/W */
 
 border: 1px solid #FFFFFF;
@@ -197,6 +196,8 @@ border-radius: 2px;
 color: #FFFFFF;
 }
 .box_input .coudown span.count{  background-color: rgba(255, 255, 255, 0.9);
+    margin-right: 10px;
+    margin-left: 10px;
     color: black;}
 
 .allVoucher{
@@ -254,6 +255,17 @@ line-height: 135%;
 
 
 text-align: left;}
+.wrap-fix{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    right: 0;
+    padding-left: 16px;
+    padding-right: 16px;
+  background: #232732;
+    padding-top: 8px;
+}
 @keyframes ani1{
     from{
         transform: rotate(0);
@@ -265,6 +277,10 @@ text-align: left;}
     }
 }
 @media screen and (min-width:992px){
+    .wrap-fix{
+        position: relative;
+        padding: 0;
+    }
     .content {
         max-width: 650px;
         margin: 0 auto;
@@ -289,5 +305,22 @@ text-align: left;}
     .wallet__item img{
         width: 40px;
         height: 40px;
+    }
+}
+@media screen and (max-width:991px){
+    .mainContent{
+        padding-bottom: 180px;
+
+    }
+    .main_top img{
+        height: 20vh;
+        max-width: 80%;
+    }
+    .seclecBox{
+        padding: 16px 16px 0 16px;
+        margin-bottom: 32px;
+    }
+    .seclecBox_item{
+        padding: 8px 16px;
     }
 }

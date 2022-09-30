@@ -3,9 +3,7 @@
 @tailwind utilities;
 
 body {
-  max-width: 1332px;
   margin: auto;
-  font-family: "Comfortaa", cursive !important;
   background: #374756;
 }
 .justify-between{

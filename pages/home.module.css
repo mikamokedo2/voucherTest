@@ -1,5 +1,5 @@
 .root {
-  background: #374756;
+  background: #232732;
   position: relative;
   min-height: 100vh;
   /* background: #374756; */
@@ -13,11 +13,13 @@
   padding: 16px;
   position: fixed;
   /* width: 375px; */
-  background: #374756;
+  background: #232732;
   width: 100%;
   left: 0;
 }
-
+.color-primary{
+  color: #FDD116;
+}
 .sectionBrand {
   margin-top: 60px;
 }
@@ -53,9 +55,16 @@
   margin-bottom: 16px;
   display: block;
 }
-
+.box-value{
+  border: 1px solid #FFFFFF;
+  border-radius: 2px;
+  align-items: center;
+  width: 100%;
+  display: flex;
+  JUSTIFY-CONTENT: center;
+  color: #ffffff;
+}
 .buyer-input {
-  background: transparent;
   border-radius: 2px;
   font-style: normal;
   font-weight: 600;
@@ -69,7 +78,6 @@
   width: 100%;
   border: 1px solid #FFFFFF;
 border-radius: 2px;
-color: #fff;
 }
 .transparent{
   background: transparent;

@@ -115,7 +115,7 @@ console.log(serverURL, socketURL);
 const Home: NextPage = () => {
   const [vouchers, setVouchers] = useState(vouchersData);
   const [selectVoucher, setSelectVoucher] = useState("");
-  const [valueVoucher, setValueVoucher] = useState(0);
+  const [valueVoucher, setValueVoucher] = useState(1000);
   const [usdc, setUsdc] = useState(0);
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
@@ -151,7 +151,7 @@ const Home: NextPage = () => {
 
   const reset = () => {
     setSelectVoucher("");
-    setValueVoucher(0);
+    setValueVoucher(1000);
     setUsdc(0);
     setEmail("");
     setOpened(false);
@@ -378,14 +378,18 @@ const Home: NextPage = () => {
     setIsConnected(true);
   };
   const increment = async () => {
-    setCount(count + 1);
+    let num = count + 1;
+    await setCount(num);
     await console.log(count);
-    // await setValueVoucher(valueVoucher * count);
+    await setValueVoucher(1000 * num);
   };
   const decrement = async () => {
-    setCount(count - 1);
-    await console.log(count);
-    // await setValueVoucher(valueVoucher * count);
+    let num = count - 1;
+    if (count > 0) {
+      await setCount(num);
+      await console.log(count);
+      await setValueVoucher(1000 * num);
+    }
   };
   const handleHover = async () => {
     setIsActive(true);
@@ -399,7 +403,6 @@ const Home: NextPage = () => {
   return (
     <div className={style.root}>
       <ToastContainer />
-
       <div
         ref={popConnectRef as any}
         className="fixed hidden w-[100vw] h-[100vh] bg-[black] bg-opacity-40 popupWallet"
@@ -446,7 +449,6 @@ const Home: NextPage = () => {
           </div>
         </div>
       </div>
-
       <section className="seclecBox">
         <div className="d-flex align-items-center  justify-between ">
           {/* <div className="body-04 mr-2">{t.selectLanguage}</div> */}
@@ -457,10 +459,10 @@ const Home: NextPage = () => {
             className="seclecBox_item"
           >
             <option className="body-04" value="vn">
-              🇻🇳
+              🇻🇳  VIE
             </option>
             <option className="body-04" value="en">
-              🇺🇸
+              🇺🇸  ENG
             </option>
           </select>
           <div
@@ -480,7 +482,6 @@ const Home: NextPage = () => {
           </div>
         </div>
       </section>
-
       <div className={`content p-[16px] ${isConnected ? "hidden" : "block"}`}>
         <img src="/money.png" alt="" />
         <h1 className="title_name">Mua Voucher</h1>
@@ -519,13 +520,89 @@ const Home: NextPage = () => {
           Back
         </a> */}
       </section>
+      <main
+        className={` p-[16px] ${isConnected ? "mainContent" : "hidden"} ${
+          popupLd ? "noactive" : ""
+        }`}
+      >
+        <div className={`main_top ${isPaid ? "hidden" : "flex"}`}>
+          <img src="/money.png" alt="" />
+        </div>
+
+        <section className={`${isPaid ? "hidden" : ""} main__mid`}>
+          <section className={style["section-buyer"]}>
+            <span className={style["buyer-name-val"]}>Nhập giá trị Vocher</span>
+
+            <div className="box_input d-flex justify-between transparent">
+              <div className={style["box-value"]}> 1.000 Xu </div>
+              <div className="coudown">
+                <span onClick={decrement}>-</span>
+                <span className="count">{count}</span>
+                <span onClick={increment}>+</span>
+              </div>
+            </div>
+
+            <div className="allVoucher">
+              <p>Tổng số xu :</p>
+              <p className="moneyVoucher">{valueVoucher} Xu</p>
+            </div>
+            <div className={style["title-price"]}>Payment Wallet</div>
+            <h1 className={style["token-id"]}>{usdc} SHOD</h1>
+            <div className="hr"></div>
+            <div className="buyer__item">
+              <div className={style["buyer-name-val"]}>
+                Gửi Voucher đến số điện thoại :
+              </div>
+              <input
+                className={style["buyer-input"]}
+                type="text"
+                value={phone}
+                placeholder="Số điện thoại"
+                onChange={(e) => setPhone(e.target.value || "")}
+              ></input>
+            </div>
+            <div className="buyer__item">
+              <div className={style["buyer-name-val"]}>
+                Gửi Voucher đến Email :
+              </div>
+              <input
+                className={style["buyer-input"]}
+                type="text"
+                value={email}
+                placeholder="Email"
+                onChange={(e) => setEmail(e.target.value || "")}
+              ></input>
+            </div>
+            <div className="wrap-fix">
+
+            <span className={style["title-you"]}>
+              <input
+                checked={agree}
+                onChange={(e) => {
+                  setAgree(e.target.checked);
+                }}
+                type="checkbox"
+                />{" "}
+              Bạn đồng ý với các <a href="" className={style["color-primary"]}>điều khoản và điều kiện</a>
+            </span>
+            <button
+              disabled={agree ? false : true}
+              onClick={() => {
+                onHandleBuying();
+              }}
+              className={style["button-buy"]}
+              >
+              Mua
+            </button>
+            </div>
+          </section>
+        </section>
+      </main>
+
+
+      {/* ----------------------Thông báo---------------------------  */}
       <div ref={popupPaymentLoadingRef as any} className="popupBuy">
         <div className={`  rounded-[4px] `}>
-          {/* <img
-            onClick={() => setOpenedPayingPopup(false)}
-            className={style["img-close"]}
-            src="/multiply.png"
-          /> */}
           <div
             className={`${
               isPaid ? "hidden" : "flex"
@@ -627,10 +704,13 @@ const Home: NextPage = () => {
           </div>
         </div>
       </div>
+
+
+
+      {/* ----------------------Support------------------------------ */}
       <div className={` contact__suport ${contactSp ? "block" : "hidden"}`}>
         <img src="./mail.png" alt="" />
         <p className="text-white">Hỗ trợ</p>
-
         <div className="contact__item">
           <div className="">Số điện thoại:</div>
           <input
@@ -673,129 +753,18 @@ const Home: NextPage = () => {
         </div>
         <button className="btn__main">Gửi</button>
       </div>
-      <main
-        className={` p-[16px] ${isConnected ? "mainContent" : "hidden"} ${
-          popupLd ? "noactive" : ""
-        }`}
-      >
-        <div className={`main_top ${isPaid ? "hidden" : "flex"}`}>
-          <img src="/money.png" alt="" />
-        </div>
 
-        <section className={`${isPaid ? "hidden" : ""} main__mid`}>
-          <section className={style["section-buyer"]}>
-            <span className={style["buyer-name-val"]}>Nhập giá trị Vocher</span>
-            <input
-              pattern="[0-9]*"
-              className={`hidden transparent`}
-              type="text"
-              onChange={(e) => {
-                const number = Number(e.target.value || 0);
-                if (isNaN(number)) return;
-                setValueVoucher(number);
-                setUsdc(convertVNDToSHOD(number));
-
-                const voucher = vouchers.find(
-                  (voucher) => voucher.price === number
-                );
-
-                if (voucher) {
-                  setSelectVoucher(voucher.id);
-                } else {
-                  setSelectVoucher("");
-                }
-              }}
-              value={valueVoucher}
-            ></input>
-            <div className="box_input d-flex justify-between transparent">
-              <input
-                pattern="[0-9]*"
-                className={style["buyer-input"]}
-                type="text"
-                onChange={(e) => {
-                  let number = removeNumberWithCommas(e.target.value || "0");
-                  console.log(number);
-                  number = Number(number || 0);
-                  if (isNaN(number)) return;
-
-                  setValueVoucher(number);
-                  setDisplayInput(numberWithCommas(number));
-                  setUsdc(convertVNDToSHOD(number));
-
-                  const voucher = vouchers.find(
-                    (voucher) => voucher.price === number
-                  );
-
-                  if (voucher) {
-                    setSelectVoucher(voucher.id);
-                  } else {
-                    setSelectVoucher("");
-                  }
-                }}
-                value={displayInput}
-              ></input>
-              <div className="coudown">
-                <span onClick={decrement}>-</span>
-                <span className="count">{count}</span>
-                <span onClick={increment}>+</span>
-              </div>
-            </div>
-
-            <div className="allVoucher">
-              <p>Tổng số xu :</p>
-              <p className="moneyVoucher">{valueVoucher}</p>
-            </div>
-            <div className="hr"></div>
-            <div className="buyer__item">
-              <div className={style["buyer-name-val"]}>
-                Gửi Voucher đến số điện thoại :
-              </div>
-              <input
-                className={style["buyer-input"]}
-                type="text"
-                value={phone}
-                placeholder="Số điện thoại"
-                onChange={(e) => setPhone(e.target.value || "")}
-              ></input>
-            </div>
-            <div className="buyer__item">
-              <div className={style["buyer-name-val"]}>
-                Gửi Voucher đến Email :
-              </div>
-              <input
-                className={style["buyer-input"]}
-                type="text"
-                value={email}
-                placeholder="Email"
-                onChange={(e) => setEmail(e.target.value || "")}
-              ></input>
-            </div>
-            <div className={style["title-price"]}>Payment Wallet</div>
-            <h1 className={style["token-id"]}>{usdc} SHOD</h1>
-            <span className={style["title-you"]}>
-              <input
-                checked={agree}
-                onChange={(e) => {
-                  setAgree(e.target.checked);
-                }}
-                type="checkbox"
-              />{" "}
-              Bạn đồng ý với các điều khoản và điều kiện
-            </span>
-            <button
-              disabled={agree ? false : true}
-              onClick={() => {
-                onHandleBuying();
-              }}
-              className={style["button-buy"]}
-            >
-              Mua
-            </button>
-          </section>
-        </section>
-      </main>
     </div>
   );
 };
 
 export default Home;
+
+
+let Waiting = () => {
+  return (
+    <>
+    
+    </>
+  )
+};
