@@ -15,9 +15,9 @@ import {
 import socketIOClient from "socket.io-client";
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 import { useRouter } from "next/router";
-import en from '../locales/en';
-import vn from '../locales/vn';
-
+import en from "../locales/en";
+import vn from "../locales/vn";
+import { error } from "console";
 
 function numberWithCommas(x: any) {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
@@ -31,6 +31,42 @@ const connectionWallet = [
   {
     name: "Metamask",
     src: "/metamask.png",
+    options: {},
+    popular: true,
+  },
+  {
+    name: "WalletConnect",
+    src: "/wallconnect1.png",
+    options: {},
+    popular: true,
+  },
+  {
+    name: "Binance Chain Wallet",
+    src: "/binaneChain.png",
+    options: {},
+    popular: true,
+  },
+  {
+    name: "TrustWallet",
+    src: "/trustwallet.png",
+    options: {},
+    popular: true,
+  },
+  {
+    name: "Math Wallet",
+    src: "/math.png",
+    options: {},
+    popular: true,
+  },
+  {
+    name: "TokenPocket",
+    src: "/token.png",
+    options: {},
+    popular: true,
+  },
+  {
+    name: "SafePal Wallet",
+    src: "/safepal.png",
     options: {},
     popular: true,
   },
@@ -82,6 +118,7 @@ const Home: NextPage = () => {
   const [valueVoucher, setValueVoucher] = useState(0);
   const [usdc, setUsdc] = useState(0);
   const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
   const [opened, setOpened] = useState(false);
   const popConnectRef = useRef<HTMLDivElement>();
   const popupPaymentLoadingRef = useRef<HTMLDivElement>();
@@ -96,17 +133,21 @@ const Home: NextPage = () => {
   const [dataQRCode, setDataQRCode] = useState("");
   const [displayInput, setDisplayInput] = useState("0");
   const [agree, setAgree] = useState(true);
-
+  const [isConnected, setIsConnected] = useState(false);
   const [web3, setWeb3] = useState(null);
   const [contract, setContract] = useState(null);
-
+  const [count, setCount] = useState(1);
+  const [contactSp, setContactSp] = useState(false);
   const [contractToken, setContractToken] = useState(null);
-
+  const [popupLd, setPopupLd] = useState(false);
+  const [nameWallet, setNameWallet] = useState(" CONNECT WALLET");
+  const [isActive, setIsActive] = useState(false);
+  const [err, setErr] = useState(false);
   const { executeRecaptcha } = useGoogleReCaptcha();
   const router = useRouter();
   const { locale } = router;
-  const t = locale === 'en' ? en : vn;
-  
+  console.log(locale);
+  const t = locale === "en" ? en : vn;
 
   const reset = () => {
     setSelectVoucher("");
@@ -139,7 +180,7 @@ const Home: NextPage = () => {
         })
         .catch((err: any) => console.error(err));
     } else {
-      alert("Please install metamask.");
+      // alert("Please install metamask.");
     }
   };
 
@@ -174,7 +215,7 @@ const Home: NextPage = () => {
       const { ethereum } = window as any;
 
       if (!ethereum) {
-        alert("Please install metamask");
+        // alert("Please install metamask");
         return;
       }
 
@@ -201,8 +242,8 @@ const Home: NextPage = () => {
   };
 
   const buyToken = async () => {
-    if (!email) {
-      alert("Please input your email");
+    if (!email && !phone) {
+      alert("Please input your Email or Phone ");
       return;
     }
 
@@ -219,6 +260,7 @@ const Home: NextPage = () => {
     }
 
     setOpenedPayingPopup(true);
+    setPopupLd(true);
     setPaying(true);
 
     const ct = contract as any;
@@ -229,7 +271,8 @@ const Home: NextPage = () => {
       user: currentAccount,
       amount: coin,
       value: valueVoucher,
-      emailorphone: email,
+      email: email,
+      phone: phone,
     });
 
     const { v, r, s }: any = signature;
@@ -246,9 +289,11 @@ const Home: NextPage = () => {
       await ct.methods
         .buy(id, amount.toString(), v, r, s)
         .send({ from: currentAccount });
+      await setIsPaid(true);
       console.log("scu");
     } else {
-      console.log("fail");
+      await setErr(true);
+      console.log("Lỗi thanh toán");
     }
   };
 
@@ -256,7 +301,7 @@ const Home: NextPage = () => {
     const { ethereum } = window as any;
 
     if (!ethereum) {
-      alert("Please install metamask.");
+      // alert("Please install metamask.");
       return;
     }
 
@@ -297,6 +342,7 @@ const Home: NextPage = () => {
   const onHandleConnectWallet = async () => {
     try {
       connectMetamask();
+      await setNameWallet("Master Wallet");
     } catch (error) {
       console.error(error);
     }
@@ -325,74 +371,38 @@ const Home: NextPage = () => {
   const changeLanguage = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const locale = e.target.value;
     router.push(router.pathname, router.asPath, { locale });
-    localStorage.setItem('locale', locale === 'en' ? 'en' : 'vi');
+    localStorage.setItem("locale", locale === "en" ? "en" : "vi");
   };
-  
-
+  const changeWallet = () => {
+    setOpened(true);
+    setIsConnected(true);
+  };
+  const increment = async () => {
+    setCount(count + 1);
+    await console.log(count);
+    // await setValueVoucher(valueVoucher * count);
+  };
+  const decrement = async () => {
+    setCount(count - 1);
+    await console.log(count);
+    // await setValueVoucher(valueVoucher * count);
+  };
+  const handleHover = async () => {
+    setIsActive(true);
+  };
+  const handleLeaveHover = async () => {
+    setIsActive(false);
+  };
+  const handleSp = () => {
+    // setPopupLd(true);
+  };
   return (
     <div className={style.root}>
       <ToastContainer />
-      <div
-        ref={popupPaymentLoadingRef as any}
-        className="fixed hidden w-[100vw] h-[100vh] bg-[black] bg-opacity-40"
-      >
-        <div
-          className={`fixed bg-white w-[350px] min-h-[450px] top-1/2 left-1/2 rounded-[4px] translate-x-[-50%] translate-y-[-50%]`}
-        >
-          <img
-            onClick={() => setOpenedPayingPopup(false)}
-            className={style["img-close"]}
-            src="/multiply.png"
-          />
-          <p className="text-black font-medium text-[500] text-center py-[40px]">
-            {isPaid ? "Giao dịch thành công" : "Đang xử lý giao dich"}
-          </p>
-          <div className={`${!isPaid ? "flex" : "hidden"} px-[8px] flex-row`}>
-            <div className="border-solid border-[1px] h-[50px] w-[100%] border-[#666666]">
-              <div className="w-1/2 h-[100%] bg-[#666] flex flex-row items-center justify-center">
-                <span className="text-white font-medium">2 Phut</span>
-              </div>
-            </div>
-          </div>
-          <div className={`${isPaid ? "flex" : "hidden"} px-[8px] flex-row`}>
-            <div className="border-solid border-[1px] h-[50px] w-[100%] border-[#666666]">
-              <div className="w-[100%] h-[100%] bg-[#000] flex flex-row items-center justify-center">
-                <span className="text-white font-medium">
-                  <img src="/Done.png" />
-                </span>
-              </div>
-            </div>
-          </div>
-          <p className="px-[37px] text-black text-[14px] font-normal text-center mt-[40px]">
-            Vui lòng không tắt khi giao dịch đang hoàn tất. Chúng tôi sẽ gửi
-            Voucher đến Email/Phone đến bạn khi giao dịch hoàn tất
-          </p>
-          <div className="flex flex-col mx-[9px] mt-[60px] gap-[16px] mb-[16px]">
-            <a
-              href={ethercanLink}
-              target={"_blank"}
-              className={`flex py-[14px] flex-row items-center justify-center rounded-[2px] border-solid border-[1px] ${
-                isPaid
-                  ? "border-black text-black cursor-pointer"
-                  : "border-[#858585] text-[#858585] cursor-none"
-              }  font-bold text-[16px] `}
-            >
-              Xem Thêm Trên Bsc Scan
-            </a>
-            <button
-              onClick={() => setOpenedPayingPopup(false)}
-              className={`${
-                isPaid ? "bg-[#FDD116] text-black" : "bg-[#858585] text-white"
-              } flex py-[14px] flex-row items-center justify-center rounded-[2px] font-bold text-[16px]`}
-            >
-              Hoàn Tất
-            </button>
-          </div>
-        </div>
-      </div>
+
       <div
         ref={popConnectRef as any}
-        className="fixed hidden w-[100vw] h-[100vh] bg-[black] bg-opacity-40"
+        className="fixed hidden w-[100vw] h-[100vh] bg-[black] bg-opacity-40 popupWallet"
       >
         <div className={style["popup-connect"]}>
           <img
@@ -405,33 +415,28 @@ const Home: NextPage = () => {
             {connectionWallet.map((connection) => (
               <div
                 key={connection.name}
-                onClick={() => setWalletSelect(connection)}
-                className="flex flex-row cursor-pointer justify-between border-[1px] items-center mx-[9px] py-[12px] px-[11px] border-solid border-wid border-[#E0E0E0]"
+                onClick={() => {
+                  setWalletSelect(connection);
+                  setIsConnected(true);
+                }}
+                className={`wallet__item flex flex-row cursor-pointer justify-between border-[1px] items-center mx-[32px] py-[12px] px-[11px] border-solid border-wid border-[#E0E0E0] ${
+                  (walletSelect as any).name === connection.name ? "active" : ""
+                }`}
               >
-                <div className="flex flex-row gap-2 items-center">
-                  <img src={connection.src} />
+                <div className="flex flex-row gap-2 items-center justify-between   w-100">
                   <span className={style.connect_name}>{connection.name}</span>
+                  <img src={connection.src} />
                 </div>
-                <div>
-                  <button
-                    className={
-                      (walletSelect as any).name === connection.name
-                        ? style.popular_button
-                        : style.popular_button_gray
-                    }
-                  >
-                    Popular
-                  </button>
-                </div>
+                <div></div>
               </div>
             ))}
-            <div className=" bg-[#fff] cursor-pointer border-[1px] border-solid border-[#a3a3a3] mx-[9px] py-[12px] px-[11px] flex justify-center items-center">
+            {/* <div className=" bg-[#fff] cursor-pointer border-[1px] border-solid border-[#a3a3a3] mx-[9px] py-[12px] px-[11px] flex justify-center items-center">
               <button className="text-center font-semibold text-[16px] text-[#858585]">
                 View More
               </button>
-            </div>
+            </div> */}
           </div>
-          <div className="absolute w-[95%] left-[8px] bottom-[8px] ">
+          <div className=" ">
             <button
               onClick={() => onHandleConnectWallet()}
               className={style["button-connect-wallet"]}
@@ -442,72 +447,243 @@ const Home: NextPage = () => {
         </div>
       </div>
 
-      <header className={style.header}>
-
-        <div className="w-[30px]">
-          <h3 className="font-bold text-[#fdd116] underline whitespace-nowrap cursor-pointer">
-            {balance ? balance + " USDC" : ""}
-          </h3>
-        </div>
-        <div className="d-flex align-items-center">
-              <div className="body-04 mr-2">{t.selectLanguage}</div>
-              <select
-                onChange={changeLanguage}
-                defaultValue={locale}
-                id="gender"
-              >
-                <option className="body-04" value="vn">
-                  🇻🇳
-                </option>
-                <option className="body-04" value="en">
-                  🇺🇸
-                </option>
-              </select>
-            </div>
-
-        <img
-          src="/logo.png"
-          onClick={() => {
-            console.log("click-logo");
-            reset();
-          }}
-        />
-        <img onClick={() => {}} src="/menu.png" />
-      </header>
-      <main className="p-[16px]">
-        <section
-          className={`${
-            isPaid ? "flex" : "hidden"
-          } flex-col justify-center gap-[8px] items-center pt-20`}
-        >
-          <h3 className="text-white font-semibold text-[16px] text-center">
-            Your voucher
-          </h3>
-          <h1 className="text-white text-[28px] font-medium text-center flex flex-row items-center gap-5 justify-center">
-            {dataQRCode ? JSON.parse(dataQRCode).code : ""}
-            <span>
-              <img src="/doc.png" />
-            </span>
-          </h1>
-          <QRCode value={dataQRCode} title={selectVoucher} level={"H"} />
-
-          <a
-            onClick={() => reset()}
-            href={ethercanLink}
-            target="_blank"
-            className={style["button-buy-success"]}
+      <section className="seclecBox">
+        <div className="d-flex align-items-center  justify-between ">
+          {/* <div className="body-04 mr-2">{t.selectLanguage}</div> */}
+          <select
+            onChange={changeLanguage}
+            defaultValue={locale}
+            id="gender"
+            className="seclecBox_item"
           >
-            Back
-          </a>
-        </section>
-        <section className={`${isPaid ? "hidden" : ""}`}>
+            <option className="body-04" value="vn">
+              🇻🇳
+            </option>
+            <option className="body-04" value="en">
+              🇺🇸
+            </option>
+          </select>
+          <div
+            className="right"
+            onMouseEnter={handleHover}
+            onMouseLeave={handleLeaveHover}
+          >
+            <div onClick={changeWallet} className="seclecBox_item">
+              <span>{nameWallet}</span>
+            </div>
+            <div className={` sub_menu ${isActive ? "active" : ""}`}>
+              <ul>
+                <li onClick={handleSp}>Contact Help</li>
+                <li>Log Out</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div className={`content p-[16px] ${isConnected ? "hidden" : "block"}`}>
+        <img src="/money.png" alt="" />
+        <h1 className="title_name">Mua Voucher</h1>
+        <p>
+          Shopdi is an ecommerce platform specializing in high-end products as
+          well as limited edition items. Participating in game application
+          activities, buyers will have the right to decide to buy trendy
+          products at the desired price without affecting the seller's profit.
+        </p>
+      </div>
+      <section
+        className={`${
+          isPaid ? "flex" : "hidden"
+        } flex-col justify-center gap-[8px] items-center pt-20`}
+      >
+        <h3 className="text-white font-semibold text-[16px] text-center">
+          Số Voucher của bạn :
+        </h3>
+        <h1 className="text-white text-[28px] font-medium text-center flex flex-row items-center gap-5 justify-center">
+          {dataQRCode ? JSON.parse(dataQRCode).code : ""}
+          <span style={{ display: "flex", alignItems: "center" }}>
+            000 <img src="/doc.png" />
+          </span>
+        </h1>
+        <QRCode value={dataQRCode} title={selectVoucher} level={"H"} />
+        {/* <a
+          onClick={() => reset()}
+          href={ethercanLink}
+          target="_blank"
+          className={style["button-buy-success"]}
+        >
+          Back
+        </a> */}
+      </section>
+      <div ref={popupPaymentLoadingRef as any} className="popupBuy">
+        <div className={`  rounded-[4px] `}>
+          {/* <img
+            onClick={() => setOpenedPayingPopup(false)}
+            className={style["img-close"]}
+            src="/multiply.png"
+          /> */}
+          <div
+            className={`${
+              isPaid ? "hidden" : "flex"
+            } px-[8px] flex-row loading`}
+          >
+            <div className="border-solid border-[1px]   border-[#666666] loading_item ">
+              <div className="w-[100%] h-[100%]  flex flex-row items-center justify-center loading_item-box ">
+                <span className="text-white font-medium   ">
+                  <img src="/loading.png" className="icon_load" />
+                </span>
+              </div>
+            </div>
+          </div>
+          <div
+            className={`${err ? "flex" : "hidden"} px-[8px] flex-row loading`}
+          >
+            <div className="border-solid border-[1px]   border-[#666666] loading_item ">
+              <div className="w-[100%] h-[100%]  flex flex-row items-center justify-center loading_item-box ">
+                <span className="text-white font-medium   ">
+                  <img src="/err.png" className="icon_load" />
+                </span>
+              </div>
+            </div>
+          </div>
+          <p className="text-white font-medium text-[500] text-center py-[40px]">
+            {isPaid ? "Giao dịch thành công" : "Đang xử lý giao dich"}
+            {err ? "Giao dịch thất bại" : ""}
+          </p>
+
+          <p
+            className={`px-[37px] text-white text-[14px] font-normal text-center mt-[40px] ${
+              isPaid ? "hidden" : "flex"
+            }`}
+          >
+            Vui lòng không tắt khi giao dịch đang hoàn tất. Chúng tôi sẽ gửi
+            Voucher đến Email/Phone đến bạn khi giao dịch hoàn tất
+          </p>
+          <p
+            className={`px-[37px] text-white text-[14px] font-normal text-center mt-[40px] border-[#FDD116] ${
+              isPaid ? "flex" : "hidden"
+            }`}
+          >
+            Vui lòng kiểm tra voucher trong email. Mọi thắc mắc vui lòng gọi đến
+            1900 3395
+          </p>
+          <p
+            className={`px-[37px] text-white text-[14px] font-normal text-center mt-[40px] ${
+              err ? "flex" : "hidden"
+            }`}
+          >
+            Số voucher hiện tại đã hết vui lòng quay lại sau
+          </p>
+          <div
+            className={`flex flex-col mx-[9px] mt-[60px] gap-[16px] mb-[16px]   ${
+              isPaid ? "flex" : "hidden"
+            }`}
+          >
+            <a
+              href={ethercanLink}
+              target={"_blank"}
+              className={`flex py-[14px] flex-row items-center justify-center rounded-[2px] border-solid border-[1px] ${
+                isPaid
+                  ? "border-[#FDD116]    text-[#FDD116] cursor-pointer"
+                  : "border-[#FDD116] text-[#FDD116] cursor-none"
+              }  font-bold text-[16px] border-[#FDD116]  `}
+            >
+              Xem Thêm Trên Bsc Scan
+            </a>
+            <a
+              href={ethercanLink}
+              target={"_blank"}
+              className={`flex py-[14px] flex-row items-center justify-center rounded-[2px] border-solid border-[1px] ${
+                err
+                  ? "border-[#FDD116]    text-[#FDD116] cursor-pointer flex"
+                  : "border-[#FDD116] text-[#FDD116] cursor-none hidden"
+              }  font-bold text-[16px] border-[#FDD116]  `}
+            >
+              Quay lại home
+            </a>
+            <a
+              href={ethercanLink}
+              target={"_blank"}
+              className={`flex py-[14px] flex-row items-center justify-center rounded-[2px] border-solid border-[1px] ${
+                isPaid
+                  ? "border-black text-black cursor-pointer"
+                  : "border-[#858585] text-black cursor-none"
+              }  font-bold text-[16px]  btn__main`}
+            >
+              Sử dụng trên shopdi app
+            </a>
+            {/* <button
+              onClick={() => setOpenedPayingPopup(false)}
+              className={`${
+                isPaid ? "bg-[#FDD116] text-black" : "bg-[#858585] text-white"
+              } flex py-[14px] flex-row items-center justify-center rounded-[2px] font-bold text-[16px]`}
+            >
+              Hoàn Tất
+            </button> */}
+          </div>
+        </div>
+      </div>
+      <div className={` contact__suport ${contactSp ? "block" : "hidden"}`}>
+        <img src="./mail.png" alt="" />
+        <p className="text-white">Hỗ trợ</p>
+
+        <div className="contact__item">
+          <div className="">Số điện thoại:</div>
+          <input
+            className={style["contact-input"]}
+            type="text"
+            value={phone}
+            placeholder="Số điện thoại"
+            onChange={(e) => setPhone(e.target.value || "")}
+          ></input>
+        </div>
+        <div className="contact__item">
+          <div className="">Email :</div>
+          <input
+            className={style["contact-input"]}
+            type="text"
+            value={phone}
+            placeholder="Số điện thoại"
+            onChange={(e) => setPhone(e.target.value || "")}
+          ></input>
+        </div>
+        <div className="contact__item">
+          <div className="">Địa chỉ ví :</div>
+          <input
+            className={style["contact-input"]}
+            type="text"
+            value={phone}
+            placeholder="Số điện thoại"
+            onChange={(e) => setPhone(e.target.value || "")}
+          ></input>
+        </div>
+        <div className="contact__item">
+          <div className="">Mô tả vấn đề cần hỗ trợ :</div>
+          <input
+            className={style["contact-input"]}
+            type="text"
+            value={phone}
+            placeholder="Số điện thoại"
+            onChange={(e) => setPhone(e.target.value || "")}
+          ></input>
+        </div>
+        <button className="btn__main">Gửi</button>
+      </div>
+      <main
+        className={` p-[16px] ${isConnected ? "mainContent" : "hidden"} ${
+          popupLd ? "noactive" : ""
+        }`}
+      >
+        <div className={`main_top ${isPaid ? "hidden" : "flex"}`}>
+          <img src="/money.png" alt="" />
+        </div>
+
+        <section className={`${isPaid ? "hidden" : ""} main__mid`}>
           <section className={style["section-buyer"]}>
-            <span className={style["buyer-name-val"]}>
-              Input the value voucher
-            </span>
+            <span className={style["buyer-name-val"]}>Nhập giá trị Vocher</span>
             <input
               pattern="[0-9]*"
-              className={`hidden`}
+              className={`hidden transparent`}
               type="text"
               onChange={(e) => {
                 const number = Number(e.target.value || 0);
@@ -527,59 +703,69 @@ const Home: NextPage = () => {
               }}
               value={valueVoucher}
             ></input>
-            <input
-              pattern="[0-9]*"
-              className={style["buyer-input"]}
-              type="text"
-              onChange={(e) => {
-                let number = removeNumberWithCommas(e.target.value || "0");
-                console.log(number);
-                number = Number(number || 0);
-                if (isNaN(number)) return;
+            <div className="box_input d-flex justify-between transparent">
+              <input
+                pattern="[0-9]*"
+                className={style["buyer-input"]}
+                type="text"
+                onChange={(e) => {
+                  let number = removeNumberWithCommas(e.target.value || "0");
+                  console.log(number);
+                  number = Number(number || 0);
+                  if (isNaN(number)) return;
 
-                setValueVoucher(number);
-                setDisplayInput(numberWithCommas(number));
-                setUsdc(convertVNDToSHOD(number));
+                  setValueVoucher(number);
+                  setDisplayInput(numberWithCommas(number));
+                  setUsdc(convertVNDToSHOD(number));
 
-                const voucher = vouchers.find(
-                  (voucher) => voucher.price === number
-                );
+                  const voucher = vouchers.find(
+                    (voucher) => voucher.price === number
+                  );
 
-                if (voucher) {
-                  setSelectVoucher(voucher.id);
-                } else {
-                  setSelectVoucher("");
-                }
-              }}
-              value={displayInput}
-            ></input>
-
-            <div className={style["list-voucher"]}>
-              {vouchers.map((voucher: any) => (
-                <div
-                  key={voucher.id}
-                  onClick={() => onClickVoucher(voucher)}
-                  className={
-                    style[
-                      `item-voucher${
-                        voucher.id === selectVoucher ? "-select" : ""
-                      }`
-                    ]
+                  if (voucher) {
+                    setSelectVoucher(voucher.id);
+                  } else {
+                    setSelectVoucher("");
                   }
-                >
-                  {`${voucher.displayPrice} VND`}
-                </div>
-              ))}
+                }}
+                value={displayInput}
+              ></input>
+              <div className="coudown">
+                <span onClick={decrement}>-</span>
+                <span className="count">{count}</span>
+                <span onClick={increment}>+</span>
+              </div>
             </div>
-            <div className={style["buyer-name-val"]}>Send Voucher To:</div>
-            <input
-              className={style["buyer-input"]}
-              type="text"
-              value={email}
-              placeholder=""
-              onChange={(e) => setEmail(e.target.value || "")}
-            ></input>
 
+            <div className="allVoucher">
+              <p>Tổng số xu :</p>
+              <p className="moneyVoucher">{valueVoucher}</p>
+            </div>
+            <div className="hr"></div>
+            <div className="buyer__item">
+              <div className={style["buyer-name-val"]}>
+                Gửi Voucher đến số điện thoại :
+              </div>
+              <input
+                className={style["buyer-input"]}
+                type="text"
+                value={phone}
+                placeholder="Số điện thoại"
+                onChange={(e) => setPhone(e.target.value || "")}
+              ></input>
+            </div>
+            <div className="buyer__item">
+              <div className={style["buyer-name-val"]}>
+                Gửi Voucher đến Email :
+              </div>
+              <input
+                className={style["buyer-input"]}
+                type="text"
+                value={email}
+                placeholder="Email"
+                onChange={(e) => setEmail(e.target.value || "")}
+              ></input>
+            </div>
             <div className={style["title-price"]}>Payment Wallet</div>
             <h1 className={style["token-id"]}>{usdc} SHOD</h1>
             <span className={style["title-you"]}>
@@ -590,7 +776,7 @@ const Home: NextPage = () => {
                 }}
                 type="checkbox"
               />{" "}
-              By clicking submit you agree to the terms and conditions
+              Bạn đồng ý với các điều khoản và điều kiện
             </span>
             <button
               disabled={agree ? false : true}
@@ -599,56 +785,11 @@ const Home: NextPage = () => {
               }}
               className={style["button-buy"]}
             >
-              Buy
+              Mua
             </button>
           </section>
         </section>
       </main>
-
-      <section className="mt-[77.5px] p-[16px] border-t-gray-200 border-t-[1px] border-b-[1px] ">
-        <img src="/logo-contact.png" />
-        <div className="flex flex-col mt-[8px]">
-          <div className="flex flex-row">
-            <div className="w-[80px] text-left text-[#F4F6F8] text-[12px] font-normal whitespace-nowrap">
-              Email
-            </div>
-            <div className="text-[#F4F6F8] text-[12px] font-normal">
-              info@shopdi.ico
-            </div>
-          </div>
-          <div className="flex flex-row">
-            <div className="w-[80px] text-left text-[#F4F6F8] text-[12px] font-normal whitespace-nowrap">
-              Website
-            </div>
-            <div className="text-[#F4F6F8] text-[12px] font-normal">
-              http://www.shopdi.io/
-            </div>
-          </div>
-          <div className="flex flex-row">
-            <div className="w-[105px] text-left text-[#F4F6F8] text-[12px] font-normal whitespace-nowrap">
-              Address
-            </div>
-            <div className="text-[#F4F6F8] text-[12px] font-normal">
-              51 Yen The, Tan Binh District, Ho Chi Minh City, Vietnam
-            </div>
-          </div>
-        </div>
-        <div className="mt-[48px] flex flex-row gap-[22px]">
-          <img src="/Facebook.png" />
-          <img src="/Twitter.png" />
-          <img src="/Instagram.png" />
-          <img src="/LinkedIn.png" />
-          <img src="/ytb.png" />
-        </div>
-
-        <div className="flex flex-row gap-[6px] mt-[8px] pb-[16px]">
-          <img src="/app.png" />
-          <img src="/google.png" />
-        </div>
-      </section>
-      <footer className="flex items-center justify-center text-[12px] text-[#f4f8f6] py-[16px]">
-        © 2022.Copyright by Shopdi
-      </footer>
     </div>
   );
 };

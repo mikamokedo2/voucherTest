@@ -3,7 +3,14 @@
 @tailwind utilities;
 
 body {
-  max-width: 375px;
+  max-width: 1332px;
   margin: auto;
   font-family: "Comfortaa", cursive !important;
+  background: #374756;
+}
+.justify-between{
+  justify-content: space-between;
+}
+.w-100{
+  width: 100%;
 }
