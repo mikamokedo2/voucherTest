@@ -106,9 +106,9 @@ const vouchersData = [
 ];
 
 const serverURL: any =
-  process.env.URL_SERVER || "https://nodejs-voucher.herokuapp.com";
+  process.env.URL_SERVER || "https://0b12-115-79-51-193.ap.ngrok.io";
 const socketURL: any =
-  process.env.URL_SERVER || "https://nodejs-voucher.herokuapp.com";
+  process.env.URL_SERVER || "https://0b12-115-79-51-193.ap.ngrok.io";
 
 console.log(serverURL, socketURL);
 
