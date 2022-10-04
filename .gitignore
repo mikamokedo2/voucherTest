@@ -1,6 +1,9 @@
-node_modules
-.next
-.build
-
-# Sentry
-.sentryclirc
+yarn.lock
+package-lock.json
+.DS_Store
+__MAC_OSX__
+yarn-error.log
+*.log
+.vs_code/
+.idea/
+.code/
