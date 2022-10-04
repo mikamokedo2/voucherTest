@@ -422,9 +422,8 @@ const Home: NextPage = () => {
                   setWalletSelect(connection);
                   setIsConnected(true);
                 }}
-                className={`wallet__item flex flex-row cursor-pointer justify-between border-[1px] items-center mx-[32px] py-[12px] px-[11px] border-solid border-wid border-[#E0E0E0] ${
-                  (walletSelect as any).name === connection.name ? "active" : ""
-                }`}
+                className={`wallet__item flex flex-row cursor-pointer justify-between border-[1px] items-center mx-[32px] py-[12px] px-[11px] border-solid border-wid border-[#E0E0E0] ${(walletSelect as any).name === connection.name ? "active" : ""
+                  }`}
               >
                 <div className="flex flex-row gap-2 items-center justify-between   w-100">
                   <span className={style.connect_name}>{connection.name}</span>
@@ -497,9 +496,8 @@ const Home: NextPage = () => {
         </p>
       </div>
       <section
-        className={`${
-          isPaid ? "flex" : "hidden"
-        } flex-col justify-center gap-[8px] items-center pt-20`}
+        className={`${isPaid ? "flex" : "hidden"
+          } flex-col justify-center gap-[8px] items-center pt-20`}
       >
         <h3 className="text-white font-semibold text-[16px] text-center">
           Số Voucher của bạn :
@@ -510,7 +508,7 @@ const Home: NextPage = () => {
             000 <img src="/doc.png" />
           </span>
         </h1>
-        <QRCode value={dataQRCode} title={selectVoucher} level={"H"} />
+        <QRCode value={dataQRCode} level={"H"} />
         {/* <a
           onClick={() => reset()}
           href={ethercanLink}
@@ -521,9 +519,8 @@ const Home: NextPage = () => {
         </a> */}
       </section>
       <main
-        className={` p-[16px] ${isConnected ? "mainContent" : "hidden"} ${
-          popupLd ? "noactive" : ""
-        }`}
+        className={` p-[16px] ${isConnected ? "mainContent" : "hidden"} ${popupLd ? "noactive" : ""
+          }`}
       >
         <div className={`main_top ${isPaid ? "hidden" : "flex"}`}>
           <img src="/money.png" alt="" />
@@ -575,25 +572,25 @@ const Home: NextPage = () => {
             </div>
             <div className="wrap-fix">
 
-            <span className={style["title-you"]}>
-              <input
-                checked={agree}
-                onChange={(e) => {
-                  setAgree(e.target.checked);
-                }}
-                type="checkbox"
+              <span className={style["title-you"]}>
+                <input
+                  checked={agree}
+                  onChange={(e) => {
+                    setAgree(e.target.checked);
+                  }}
+                  type="checkbox"
                 />{" "}
-              Bạn đồng ý với các <a href="" className={style["color-primary"]}>điều khoản và điều kiện</a>
-            </span>
-            <button
-              disabled={agree ? false : true}
-              onClick={() => {
-                onHandleBuying();
-              }}
-              className={style["button-buy"]}
+                Bạn đồng ý với các <a href="" className={style["color-primary"]}>điều khoản và điều kiện</a>
+              </span>
+              <button
+                disabled={agree ? false : true}
+                onClick={() => {
+                  onHandleBuying();
+                }}
+                className={style["button-buy"]}
               >
-              Mua
-            </button>
+                Mua
+              </button>
             </div>
           </section>
         </section>
@@ -604,9 +601,8 @@ const Home: NextPage = () => {
       <div ref={popupPaymentLoadingRef as any} className="popupBuy">
         <div className={`  rounded-[4px] `}>
           <div
-            className={`${
-              isPaid ? "hidden" : "flex"
-            } px-[8px] flex-row loading`}
+            className={`${isPaid ? "hidden" : "flex"
+              } px-[8px] flex-row loading`}
           >
             <div className="border-solid border-[1px]   border-[#666666] loading_item ">
               <div className="w-[100%] h-[100%]  flex flex-row items-center justify-center loading_item-box ">
@@ -633,63 +629,56 @@ const Home: NextPage = () => {
           </p>
 
           <p
-            className={`px-[37px] text-white text-[14px] font-normal text-center mt-[40px] ${
-              isPaid ? "hidden" : "flex"
-            }`}
+            className={`px-[37px] text-white text-[14px] font-normal text-center mt-[40px] ${isPaid ? "hidden" : "flex"
+              }`}
           >
             Vui lòng không tắt khi giao dịch đang hoàn tất. Chúng tôi sẽ gửi
             Voucher đến Email/Phone đến bạn khi giao dịch hoàn tất
           </p>
           <p
-            className={`px-[37px] text-white text-[14px] font-normal text-center  border-[#FDD116] ${
-              isPaid ? "flex" : "hidden"
-            }`}
+            className={`px-[37px] text-white text-[14px] font-normal text-center  border-[#FDD116] ${isPaid ? "flex" : "hidden"
+              }`}
           >
             Vui lòng kiểm tra voucher trong email. Mọi thắc mắc vui lòng gọi đến
             1900 3395
           </p>
           <p
-            className={`px-[37px] text-white text-[14px] font-normal text-center mt-[40px] ${
-              err ? "flex" : "hidden"
-            }`}
+            className={`px-[37px] text-white text-[14px] font-normal text-center mt-[40px] ${err ? "flex" : "hidden"
+              }`}
           >
             Số voucher hiện tại đã hết vui lòng quay lại sau
           </p>
           <div
-            className={`flex flex-col mx-[9px] mt-[60px] gap-[16px] mb-[16px]   ${
-              isPaid ? "flex" : "hidden"
-            }`}
+            className={`flex flex-col mx-[9px] mt-[60px] gap-[16px] mb-[16px]   ${isPaid ? "flex" : "hidden"
+              }`}
           >
             <a
               href={ethercanLink}
               target={"_blank"}
-              className={`flex py-[14px] flex-row items-center justify-center rounded-[2px] border-solid border-[1px] ${
-                isPaid
+              className={`flex py-[14px] flex-row items-center justify-center rounded-[2px] border-solid border-[1px] ${isPaid
                   ? "border-[#FDD116]    text-[#FDD116] cursor-pointer"
                   : "border-[#FDD116] text-[#FDD116] cursor-none"
-              }  font-bold text-[16px] border-[#FDD116]  `}
+                }  font-bold text-[16px] border-[#FDD116]  `}
             >
               Xem Thêm Trên Bsc Scan
             </a>
             <a
               href={ethercanLink}
               target={"_blank"}
-              className={`flex py-[14px] flex-row items-center justify-center rounded-[2px] border-solid border-[1px] ${
-                err
+              className={`flex py-[14px] flex-row items-center justify-center rounded-[2px] border-solid border-[1px] ${err
                   ? "border-[#FDD116]    text-[#FDD116] cursor-pointer flex"
                   : "border-[#FDD116] text-[#FDD116] cursor-none hidden"
-              }  font-bold text-[16px] border-[#FDD116]  `}
+                }  font-bold text-[16px] border-[#FDD116]  `}
             >
               Quay lại home
             </a>
             <a
               href={ethercanLink}
               target={"_blank"}
-              className={`flex py-[14px] flex-row items-center justify-center rounded-[2px] border-solid border-[1px] ${
-                isPaid
+              className={`flex py-[14px] flex-row items-center justify-center rounded-[2px] border-solid border-[1px] ${isPaid
                   ? "border-black text-black cursor-pointer"
                   : "border-[#858585] text-black cursor-none"
-              }  font-bold text-[16px]  btn__main`}
+                }  font-bold text-[16px]  btn__main`}
             >
               Sử dụng trên shopdi app
             </a>
@@ -764,7 +753,7 @@ export default Home;
 let Waiting = () => {
   return (
     <>
-    
+
     </>
   )
 };
