@@ -3,6 +3,7 @@
   position: relative;
   min-height: 100vh;
   /* background: #374756; */
+  font-family: 'Quicksand', sans-serif;;
 }
 
 .header {
@@ -190,7 +191,9 @@ border-radius: 2px;
 font-size: 20px;
 line-height: 28px;color: #000000;
 }
-
+.button-buy:disabled{
+  opacity: 0.5;
+}
 .button-buy-success {
   margin-top: 16px;
   display: flex;
