@@ -13,7 +13,6 @@ import Alert from "../components/Alert";
 import Header from "../components/Header";
 import { useContractFunction, useEthers } from "@usedapp/core";
 import { Contract } from "@ethersproject/contracts";
-// import BigNumber from "bignumber.js";
 import Loading from "../components/Loading";
 import ErrorPopup from "../components/ErrorPopup";
 import Success from "../components/Alert";
@@ -48,29 +47,19 @@ const Home: NextPage = () => {
     transactionName: "approve",
   });
 
-  async function verifyCaptcha() {
-    const getToken = executeRecaptcha as any;
-    const captcha = await getToken("signup");
-
-    const { data } = await axios.post(`${serverURL}/captcha`, { captcha });
-    return data;
-  }
-
   useEffect(() => {
     const approveSuccess = async () => {
       setOpenedPayingPopup(true);
       try {
-        const { success: isVerify, message } = await verifyCaptcha();
-        if (!isVerify) {
-          alert(message);
-          return;
-        }
+        const getToken = executeRecaptcha as any;
+        const captcha = await getToken("signup");
         const { data } = await axios.post(`${serverURL}/order`, {
           user: account,
           amount: BigNumber.from(valueVoucher * rateConvert).mul(BigNumber.from(10).pow(decimals)).toString(),
           value: valueVoucher,
           emailorphone: phone ?? email,
           txt: state.transaction?.hash,
+          captcha
         });
         if (data.success) {
           console.log(data);
