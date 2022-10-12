@@ -19,11 +19,11 @@ import ErrorPopup from "../components/ErrorPopup";
 import Success from "../components/Alert";
 import { BigNumber } from "ethers";
 
-//export const serverURL: any =
-//   process.env.URL_SERVER || "https://api-voucher.shopdi.io";
+export const serverURL: any =
+  process.env.URL_SERVER || "https://api-voucher.shopdi.io";
 const decimals = 18;
 
-export const serverURL = "http://localhost:8000";
+// export const serverURL = "http://localhost:8000";
 
 const Home: NextPage = () => {
   const { account } = useEthers();

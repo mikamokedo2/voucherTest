@@ -16,6 +16,7 @@ export default {
   addressWallet:"Địa chỉ ví",
   descriptionSupport:"Mô tả vấn đề cần hỗ trợ",
   send:"Gửi",
+  sendRequest:"Đã gửi yêu cầu hổ trợ",
   connectOneWallet:"Chọn ví bạn đang dùng",
   selectWallet:"Chọn ví",
   mustInput:"Vui lòng nhập số điện thoại hoặc email",
