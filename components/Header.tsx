@@ -5,6 +5,7 @@ import WalletPopup from "./WalletPopup";
 import { useRouter } from "next/router";
 import en from "../locales/en";
 import vn from "../locales/vn";
+import {useWeb3} from "../hook/web3";
 
 const Header = () => {
   const router = useRouter();
@@ -18,8 +19,11 @@ const Header = () => {
     options: {},
     popular: true,
   });
+
+  const {connectMetamask,address} = useWeb3();
+  console.log(address)
   const [opened, setOpened] = useState(false);
-  const isConnected = account !== undefined;
+  const isConnected = address !== "";
   const handleHover = async () => {
     setIsActive(true);
   };
@@ -28,10 +32,11 @@ const Header = () => {
   };
 
 
+
   return (
     <section className="seclecBox">
       <WalletPopup
-        onHandleConnectWallet={() => {activateBrowserWallet();setOpened(false)}}
+        onHandleConnectWallet={() => {connectMetamask();setOpened(false)}}
         onSelectWallet={(connection) => {
           setWalletSelect(connection);
         }}
@@ -48,10 +53,10 @@ const Header = () => {
             onMouseLeave={handleLeaveHover}
           >
             <div className="seclecBox_item">
-              <span className="uppercase">{`${account.slice(
+              <span className="uppercase">{`${address.slice(
                 0,
                 4
-              )}...${account.slice(account.length - 4, account.length)}`}</span>
+              )}...${address.slice(address.length - 4, address.length)}`}</span>
             </div>
             <div className={` sub_menu ${isActive ? "active" : ""}`}>
               <ul>

@@ -17,11 +17,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <GoogleReCaptchaProvider reCaptchaKey="6LcfPlMiAAAAAElmb9nx2Ejm31DgWhznaSspvRpa">
         <ToastContainer />
-        <DAppProvider
-      config={config}
-    >
       <Component {...pageProps} />
-      </DAppProvider>
     </GoogleReCaptchaProvider>
   );
 }

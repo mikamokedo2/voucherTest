@@ -20,7 +20,8 @@ import { BigNumber } from "ethers";
 import * as yup from "yup";
 import { useFormik } from "formik";
 import "yup-phone";
-import FaqPopup from "../components/FaqPopup"
+import FaqPopup from "../components/FaqPopup";
+import {useWeb3} from "../hook/web3";
 
 export const validationPhoneSchema = yup.object({
   phone: yup.string().phone("VN").test(function (value) {
@@ -72,6 +73,7 @@ const Home: NextPage = () => {
     transactionName: "approve",
   });
 
+  const {connectMetamask} = useWeb3()
   useEffect(() => {
     const approveSuccess = async () => {
       setOpenedPayingPopup(true);
