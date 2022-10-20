@@ -9,7 +9,7 @@ import { DAppProvider } from '@usedapp/core';
 const config = {
   readOnlyChainId: 97,
   readOnlyUrls: {
-    [97]: 'https://data-seed-prebsc-1-s1.binance.org:8545',
+    [97]: 'https://dev.kardiachain.io',
   },
 };
 

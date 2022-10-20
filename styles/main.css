@@ -262,6 +262,10 @@
     transform: translate(-50%,-50%);
     background: gray;
     padding: 50px;
+    z-index: 99;
+}
+.popupBuy.popupBuy-white{
+    background-color: #fff;
 }
 
 .contact__suport {
@@ -386,4 +390,11 @@
     .seclecBox_item {
         padding: 8px 16px;
     }
+    .popupBuy {
+        width: 93vw;
+        padding:50px 30px;
+    }
+}
+.rc-anchor-normal-footer{
+    display: none;
 }

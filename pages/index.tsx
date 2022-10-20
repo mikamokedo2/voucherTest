@@ -17,6 +17,19 @@ import Loading from "../components/Loading";
 import ErrorPopup from "../components/ErrorPopup";
 import Success from "../components/Alert";
 import { BigNumber } from "ethers";
+import * as yup from "yup";
+import { useFormik } from "formik";
+import "yup-phone";
+import FaqPopup from "../components/FaqPopup"
+
+export const validationPhoneSchema = yup.object({
+  phone: yup.string().phone("VN").test(function (value) {
+    const { email } = this.parent;
+    if (!email) return value != null
+    return true
+  }),
+  email: yup.string().email("Invalid email format")
+});
 
 export const serverURL: any =
   process.env.URL_SERVER || "https://api-voucher.shopdi.io";
@@ -25,15 +38,27 @@ const decimals = 18;
 // export const serverURL = "http://localhost:8000";
 
 const Home: NextPage = () => {
+  const formik = useFormik({
+    initialValues: {
+      phone: "",
+      email: "",
+
+    },
+    validationSchema: validationPhoneSchema,
+    onSubmit: async (value) => {
+      onHandleBuying();
+    },
+  });
+
+
   const { account } = useEthers();
   const [valueVoucher, setValueVoucher] = useState(1000);
   const [rateConvert, setRateConvert] = useState(1);
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
   const [openedPaying, setOpenedPayingPopup] = useState(false);
   const [isPaid, setIsPaid] = useState(false);
   const [dataQRCode, setDataQRCode] = useState("");
   const [agree, setAgree] = useState(true);
+  const [faq, setFaq] = useState(false);
   const [count, setCount] = useState(1);
   const [adminWallet, setAdminWallet] = useState("");
   const [err, setErr] = useState(false);
@@ -57,7 +82,7 @@ const Home: NextPage = () => {
           user: account,
           amount: BigNumber.from(valueVoucher * rateConvert).mul(BigNumber.from(10).pow(decimals)).toString(),
           value: valueVoucher,
-          emailorphone: phone ?? email,
+          emailorphone: formik.values.phone ?? formik.values.email,
           txt: state.transaction?.hash,
           captcha
         });
@@ -85,10 +110,6 @@ const Home: NextPage = () => {
   }, [state]);
 
   const onHandleBuying = async () => {
-    if (!email && !phone) {
-      alert(t.mustInput);
-      return;
-    }
     try {
       await send(
         adminWallet,
@@ -180,11 +201,12 @@ const Home: NextPage = () => {
                 {t.phoneNumber} :
               </div>
               <input
-                className={style["buyer-input"]}
+                className={`${style["contact-input"]} ${formik.touched.phone && Boolean(formik.errors.phone) && "border border-red-500 border-solid"}`}
                 type="text"
-                value={phone}
+                value={formik.values.phone}
+                name="phone"
                 placeholder={t.phoneNumber}
-                onChange={(e) => setPhone(e.target.value || "")}
+                onChange={formik.handleChange}
               ></input>
             </div>
             <div className="buyer__item">
@@ -192,11 +214,12 @@ const Home: NextPage = () => {
                Email :
               </div>
               <input
-                className={style["buyer-input"]}
+                className={`${style["contact-input"]} ${formik.touched.email && Boolean(formik.errors.email) && "border border-red-500 border-solid"}`}
                 type="text"
-                value={email}
+                value={formik.values.email}
                 placeholder="Email"
-                onChange={(e) => setEmail(e.target.value || "")}
+                onChange={formik.handleChange}
+                name="email"
               ></input>
             </div>
             <div className="wrap-fix">
@@ -209,13 +232,13 @@ const Home: NextPage = () => {
                   type="checkbox"
                 />{" "}
                 {t.agree}&nbsp;
-                <a href="" className={style["color-primary"]}>
+                <span className={`${style["color-primary"]} cursor-pointer`} onClick={() => setFaq(true)}>
                   {t.condition}
-                </a>
+                </span>
               </span>
               <button
                 disabled={!agree || state.status === "Mining"}
-                onClick={onHandleBuying}
+                onClick={() => formik.handleSubmit()}
                 className={style["button-buy"]}
               >
                 {t.buy}
@@ -239,6 +262,8 @@ const Home: NextPage = () => {
           }}
         />
       )}
+      {faq &&   <FaqPopup onClose={() => setFaq(false)} />}
+    
     </div>
   );
 };
