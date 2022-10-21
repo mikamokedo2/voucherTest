@@ -30,46 +30,11 @@ function removeNumberWithCommas(x: any) {
 const connectionWallet = [
   {
     name: "Metamask",
-    src: "/metamask.png",
+    src: "assets/images/metamask.png",
     options: {},
     popular: true,
   },
-  {
-    name: "WalletConnect",
-    src: "/wallconnect1.png",
-    options: {},
-    popular: true,
-  },
-  {
-    name: "Binance Chain Wallet",
-    src: "/binaneChain.png",
-    options: {},
-    popular: true,
-  },
-  {
-    name: "TrustWallet",
-    src: "/trustwallet.png",
-    options: {},
-    popular: true,
-  },
-  {
-    name: "Math Wallet",
-    src: "/math.png",
-    options: {},
-    popular: true,
-  },
-  {
-    name: "TokenPocket",
-    src: "/token.png",
-    options: {},
-    popular: true,
-  },
-  {
-    name: "SafePal Wallet",
-    src: "/safepal.png",
-    options: {},
-    popular: true,
-  },
+
 ];
 
 const vouchersData = [
@@ -106,17 +71,17 @@ const vouchersData = [
 ];
 
 const serverURL: any =
-  process.env.URL_SERVER || "https://api-voucher.shopdi.io";
+  process.env.URL_SERVER || "https://2104-188-214-152-234.ap.ngrok.io";
 const socketURL: any =
-  process.env.URL_SERVER || "https://api-voucher.shopdi.io";
+  process.env.URL_SERVER || "https://2104-188-214-152-234.ap.ngrok.io";
 
-console.log(serverURL, socketURL);
-
+// console.log(serverURL, socketURL);
+  
 const Home: NextPage = () => {
   const [vouchers, setVouchers] = useState(vouchersData);
   const [selectVoucher, setSelectVoucher] = useState("");
   const [valueVoucher, setValueVoucher] = useState(1000);
-  const [usdc, setUsdc] = useState(0);
+  // const [usdc, setUsdc] = useState(0);
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [opened, setOpened] = useState(false);
@@ -140,19 +105,19 @@ const Home: NextPage = () => {
   const [contactSp, setContactSp] = useState(false);
   const [contractToken, setContractToken] = useState(null);
   const [popupLd, setPopupLd] = useState(false);
-  const [nameWallet, setNameWallet] = useState(" CONNECT WALLET");
+  const [nameWallet, setNameWallet] = useState("CONNECT WALLET");
   const [isActive, setIsActive] = useState(false);
   const [err, setErr] = useState(false);
   const { executeRecaptcha } = useGoogleReCaptcha();
   const router = useRouter();
   const { locale } = router;
-  console.log(locale);
+  // console.log(locale);
   const t = locale === "en" ? en : vn;
 
   const reset = () => {
     setSelectVoucher("");
     setValueVoucher(1000);
-    setUsdc(0);
+    // setUsdc(0);
     setEmail("");
     setOpened(false);
     setOpenedPayingPopup(false);
@@ -169,7 +134,7 @@ const Home: NextPage = () => {
 
   const connectMetamask = async () => {
     const { ethereum: provider } = window as any;
-
+    // console.log('hiiiii');
     if (typeof provider !== "undefined") {
       provider
         .request({ method: "eth_requestAccounts" })
@@ -177,10 +142,12 @@ const Home: NextPage = () => {
           const [account] = accounts;
           setCurrentAccount(account);
           setOpened(false);
+          setNameWallet(accounts)
+          // debugger;
         })
         .catch((err: any) => console.error(err));
     } else {
-      // alert("Please install metamask.");
+      alert("Please install metamask.");
     }
   };
 
@@ -206,8 +173,15 @@ const Home: NextPage = () => {
     const getToken = executeRecaptcha as any;
     const captcha = await getToken("signup");
 
-    const { data } = await axios.post(`${serverURL}/captcha`, { captcha });
+    try {
+      const { data } = await axios.post(`${serverURL}/captcha`, { captcha });
+
     return data;
+    } catch (e) {
+      console.log('Axios Failed');
+      return {success: false, message: "Can't connect to server to verify transaction  "}
+    }
+    
   }
 
   useEffect(() => {
@@ -215,7 +189,7 @@ const Home: NextPage = () => {
       const { ethereum } = window as any;
 
       if (!ethereum) {
-        // alert("Please install metamask");
+        alert("Please install metamask");
         return;
       }
 
@@ -247,7 +221,7 @@ const Home: NextPage = () => {
       return;
     }
 
-    if (!usdc) {
+    if (!valueVoucher) {
       alert("Please input your value voucher");
       return;
     }
@@ -257,6 +231,8 @@ const Home: NextPage = () => {
     if (!isVerify) {
       alert(message);
       return;
+    } else {
+      console.log('Verify Captcha success')
     }
 
     setOpenedPayingPopup(true);
@@ -265,7 +241,7 @@ const Home: NextPage = () => {
 
     const ct = contract as any;
     const ctToken = contractToken as any;
-    const coin = Number(usdc) * 1000000000000000000;
+    const coin = Number(valueVoucher);
 
     const { signature, data }: any = await signatureContract({
       user: currentAccount,
@@ -290,7 +266,7 @@ const Home: NextPage = () => {
         .buy(id, amount.toString(), v, r, s)
         .send({ from: currentAccount });
       await setIsPaid(true);
-      console.log("scu");
+      console.log("Success");
     } else {
       await setErr(true);
       console.log("Lỗi thanh toán");
@@ -323,7 +299,7 @@ const Home: NextPage = () => {
     setSelectVoucher(voucher.id);
     setValueVoucher(voucher.price);
     setDisplayInput(voucher.displayPrice);
-    setUsdc(convertVNDToSHOD(voucher.price));
+    // setUsdc(convertVNDToSHOD(voucher.price));
   };
 
   const showHideConnectionPopup = (ref: any, opened = false) => {
@@ -380,14 +356,15 @@ const Home: NextPage = () => {
   const increment = async () => {
     let num = count + 1;
     await setCount(num);
-    await console.log(count);
+    console.log('Increase count ', count);
+
     await setValueVoucher(1000 * num);
   };
   const decrement = async () => {
     let num = count - 1;
     if (count > 0) {
       await setCount(num);
-      await console.log(count);
+      console.log('Decrease count ', count);
       await setValueVoucher(1000 * num);
     }
   };
@@ -411,7 +388,7 @@ const Home: NextPage = () => {
           <img
             onClick={() => setOpened(false)}
             className={style["img-close"]}
-            src="/multiply.png"
+            src="assets/images/multiply.png"
           />
           <p className={style.titleConnect}>Connect one of wallet</p>
           <div className={"flex flex-col"}>
@@ -438,7 +415,7 @@ const Home: NextPage = () => {
               </button>
             </div> */}
           </div>
-          <div className=" ">
+          <div className="h-50 w-full">
             <button
               onClick={() => onHandleConnectWallet()}
               className={style["button-connect-wallet"]}
@@ -458,11 +435,11 @@ const Home: NextPage = () => {
             className="seclecBox_item"
           >
             <option className="body-04" value="vn">
-              🇻🇳  VIE
+              🇺🇸  VIE
             </option>
-            <option className="body-04" value="en">
+            {/* <option className="body-04" value="en">
               🇺🇸  ENG
-            </option>
+            </option> */}
           </select>
           <div
             className="right"
@@ -482,17 +459,11 @@ const Home: NextPage = () => {
         </div>
       </section>
       <div className={`content p-[16px] ${isConnected ? "hidden" : "block"}`}>
-        <img src="/money.png" alt="" />
+        <img className={`big-icon`} src="assets/images/money.png" alt="" />
         <h1 className="title_name">Mua Voucher</h1>
         <p>
-          Shopdi is an ecommerce platform specializing in high-end products as
-          well as limited edition items. Participating in game application
-          activities, buyers will have the right to decide to buy trendy
-          products at the desired price without affecting the seller's profit.
-          Shopdi is an ecommerce platform specializing in high-end products as
-          well as limited edition items. Participating in game application
-          activities, buyers will have the right to decide to buy trendy
-          products at the desired price without affecting the seller's profit.
+          Shopdi is an ecommerce platform specializing in high-end products as well as limited edition items. Participating in game application activities, buyers will have the right to decide to buy trendy products at the desired price without affecting the seller's profit.
+
         </p>
       </div>
       <section
@@ -505,25 +476,18 @@ const Home: NextPage = () => {
         <h1 className="text-white text-[28px] font-medium text-center flex flex-row items-center gap-5 justify-center">
           {dataQRCode ? JSON.parse(dataQRCode).code : ""}
           <span style={{ display: "flex", alignItems: "center" }}>
-            000 <img src="/doc.png" />
+            000 <img src="assets/images/doc.png" />
           </span>
         </h1>
         <QRCode value={dataQRCode} level={"H"} />
-        {/* <a
-          onClick={() => reset()}
-          href={ethercanLink}
-          target="_blank"
-          className={style["button-buy-success"]}
-        >
-          Back
-        </a> */}
+
       </section>
       <main
         className={` p-[16px] ${isConnected ? "mainContent" : "hidden"} ${popupLd ? "noactive" : ""
           }`}
       >
         <div className={`main_top ${isPaid ? "hidden" : "flex"}`}>
-          <img src="/money.png" alt="" />
+          <img src="assets/images/money.png" alt="" />
         </div>
 
         <section className={`${isPaid ? "hidden" : ""} main__mid`}>
@@ -544,7 +508,7 @@ const Home: NextPage = () => {
               <p className="moneyVoucher">{valueVoucher} Xu</p>
             </div>
             <div className={style["title-price"]}>Payment Wallet</div>
-            <h1 className={style["token-id"]}>{usdc} SHOD</h1>
+            <h1 className={style["token-id"]}>{valueVoucher} SHOD</h1>
             <div className="hr"></div>
             <div className="buyer__item">
               <div className={style["buyer-name-val"]}>
@@ -607,7 +571,7 @@ const Home: NextPage = () => {
             <div className="border-solid border-[1px]   border-[#666666] loading_item ">
               <div className="w-[100%] h-[100%]  flex flex-row items-center justify-center loading_item-box ">
                 <span className="text-white font-medium   ">
-                  <img src="/loading.png" className="icon_load" />
+                  <img src="assets/images/loading.png" className="icon_load" />
                 </span>
               </div>
             </div>
@@ -618,7 +582,7 @@ const Home: NextPage = () => {
             <div className="border-solid border-[1px]   border-[#666666] loading_item ">
               <div className="w-[100%] h-[100%]  flex flex-row items-center justify-center loading_item-box ">
                 <span className="text-white font-medium   ">
-                  <img src="/err.png" className="icon_load" />
+                  <img src="assets/images/err.png" className="icon_load" />
                 </span>
               </div>
             </div>
@@ -656,8 +620,8 @@ const Home: NextPage = () => {
               href={ethercanLink}
               target={"_blank"}
               className={`flex py-[14px] flex-row items-center justify-center rounded-[2px] border-solid border-[1px] ${isPaid
-                  ? "border-[#FDD116]    text-[#FDD116] cursor-pointer"
-                  : "border-[#FDD116] text-[#FDD116] cursor-none"
+                ? "border-[#FDD116]    text-[#FDD116] cursor-pointer"
+                : "border-[#FDD116] text-[#FDD116] cursor-none"
                 }  font-bold text-[16px] border-[#FDD116]  `}
             >
               Xem Thêm Trên Bsc Scan
@@ -666,8 +630,8 @@ const Home: NextPage = () => {
               href={ethercanLink}
               target={"_blank"}
               className={`flex py-[14px] flex-row items-center justify-center rounded-[2px] border-solid border-[1px] ${err
-                  ? "border-[#FDD116]    text-[#FDD116] cursor-pointer flex"
-                  : "border-[#FDD116] text-[#FDD116] cursor-none hidden"
+                ? "border-[#FDD116]    text-[#FDD116] cursor-pointer flex"
+                : "border-[#FDD116] text-[#FDD116] cursor-none hidden"
                 }  font-bold text-[16px] border-[#FDD116]  `}
             >
               Quay lại home
@@ -676,8 +640,8 @@ const Home: NextPage = () => {
               href={ethercanLink}
               target={"_blank"}
               className={`flex py-[14px] flex-row items-center justify-center rounded-[2px] border-solid border-[1px] ${isPaid
-                  ? "border-black text-black cursor-pointer"
-                  : "border-[#858585] text-black cursor-none"
+                ? "border-black text-black cursor-pointer"
+                : "border-[#858585] text-black cursor-none"
                 }  font-bold text-[16px]  btn__main`}
             >
               Sử dụng trên shopdi app
@@ -698,7 +662,7 @@ const Home: NextPage = () => {
 
       {/* ----------------------Support------------------------------ */}
       <div className={` contact__suport ${contactSp ? "block" : "hidden"}`}>
-        <img src="./mail.png" alt="" />
+        <img src="assets/images/mail.png" alt="" />
         <p className="text-white">Hỗ trợ</p>
         <div className="contact__item">
           <div className="">Số điện thoại:</div>

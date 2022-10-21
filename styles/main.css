@@ -381,3 +381,8 @@
         padding: 8px 16px;
     }
 }
+
+.big-icon {
+    height: 256px;
+    width: 256px;
+}
