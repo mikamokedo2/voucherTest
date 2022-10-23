@@ -19,7 +19,7 @@ import Success from "../components/Alert";
 import { BigNumber } from "ethers";
 
 export const serverURL: any =
-  process.env.URL_SERVER || "https://api-voucher.shopdi.io";
+  process.env.URL_SERVER || "https://api.digitalvoucher.io";
 const decimals = 18;
 
 // export const serverURL = "http://localhost:8000";
