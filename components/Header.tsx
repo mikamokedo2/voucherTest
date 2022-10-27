@@ -1,4 +1,3 @@
-import { useEthers } from "@usedapp/core";
 import React, { useEffect, useState } from "react";
 import SelectLanguage from "./SelectLanguage";
 import WalletPopup from "./WalletPopup";
@@ -12,7 +11,6 @@ const Header = () => {
   const { locale } = router;
   const t = locale === "en" ? en : vn;
   const [isActive, setIsActive] = useState(false);
-  const { activateBrowserWallet, account, deactivate } = useEthers();
   const [walletSelect, setWalletSelect] = useState({
     name: "Metamask",
     src: "/metamask.png",
@@ -20,8 +18,7 @@ const Header = () => {
     popular: true,
   });
 
-  const {connectMetamask,address} = useWeb3();
-  console.log(address)
+  const {connectMetamask,address,setNetWork,netWork} = useWeb3();
   const [opened, setOpened] = useState(false);
   const isConnected = address !== "";
   const handleHover = async () => {
@@ -31,12 +28,10 @@ const Header = () => {
     setIsActive(false);
   };
 
-
-
   return (
-    <section className="seclecBox">
+    <section className="seclecBox container mx-auto">
       <WalletPopup
-        onHandleConnectWallet={() => {connectMetamask();setOpened(false)}}
+        onHandleConnectWallet={() => {connectMetamask && connectMetamask();setOpened(false)}}
         onSelectWallet={(connection) => {
           setWalletSelect(connection);
         }}
@@ -44,7 +39,7 @@ const Header = () => {
         walletSelect={walletSelect}
         opened={opened}
       />
-      <div className="d-flex align-items-center  justify-between ">
+      <div className="d-flex align-items-center justify-between ">
         <SelectLanguage />
         {isConnected ? (
           <div
@@ -61,14 +56,27 @@ const Header = () => {
             <div className={` sub_menu ${isActive ? "active" : ""}`}>
               <ul>
                 <li onClick={() => router.push("/support")}>{t.contactHelp}</li>
-                <li onClick={deactivate}>{t.disconnect}</li>
+                <li onClick={() => router.push("/faq")}>FAQs</li>
               </ul>
             </div>
           </div>
         ) : (
-          <div onClick={() => setOpened(true)} className="seclecBox_item">
-            <span className="uppercase">{t.connectWallet}</span>
-          </div>
+
+                    <div
+                    className="right"
+                    onMouseEnter={handleHover}
+                    onMouseLeave={handleLeaveHover}
+                  >
+                    <div className="seclecBox_item">
+                      <span className="uppercase">{t.connectWallet}</span>
+                    </div>
+                    <div className={` sub_menu ${isActive ? "active" : ""}`}>
+                      <ul>
+                        <li onClick={() => {setOpened(true);setNetWork && setNetWork("bsc")}}>BSC chain</li>
+                        <li onClick={() => {setOpened(true);setNetWork && setNetWork("kai")}}>KAI chain</li>
+                      </ul>
+                    </div>
+                  </div>
         )}
       </div>
     </section>

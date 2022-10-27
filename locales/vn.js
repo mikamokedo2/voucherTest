@@ -25,5 +25,7 @@ export default {
   agree:"Đồng ý với",
   condition:"điều khoản và điều kiện",
   totalCoin:"Tổng số xu",
-  coin:"Xu"
+  coin:"Xu",
+  faq:"Câu hỏi thường gặp",
+  buyNow:"MUA NGAY"
 };

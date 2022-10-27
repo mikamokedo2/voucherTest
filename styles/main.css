@@ -118,7 +118,7 @@
 
 .seclecBox {
     padding: 32px 32px 0 32px;
-    margin-bottom: 100px;
+    margin-bottom: 60px;
 }
 
 .seclecBox_item {
@@ -148,7 +148,7 @@
     line-height: 130%;
     letter-spacing: -1px;
     margin-bottom: 24px;
-    color: #F4F6F8;
+    color: rgba(253, 209, 22, 1);
 }
 
 .content p {
@@ -276,7 +276,6 @@
 
 .contact__suport img {
     margin: 0 auto;
-    max-width: 400px;
     margin-bottom: 60px;
 }
 
@@ -394,7 +393,53 @@
         width: 93vw;
         padding:50px 30px;
     }
+    .contact__suport{
+        padding: 0 3%;
+    }
+    .contact__item div{
+        font-size: 16px;
+    }
+
+    
 }
 .rc-anchor-normal-footer{
     display: none;
+}
+
+.box-voucher-type{
+    border-radius: 8px;
+    border:1px solid #fff;
+    height: 200px;
+    width: 430px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+.box-voucher-type .text-inside{
+    font-weight: 600;
+font-size: 30px;
+line-height: 134%;
+letter-spacing: -0.5px;
+color: #fff;
+}
+.home-description{
+    color: #fff;
+    font-size: 18px;
+    margin-top: 30px;
+    max-width: 363px;
+}
+.text-red{
+    color: red;
+}
+@media screen and (max-width: 768px) { 
+
+    .box-voucher-type{
+        height: 150px;
+    
+    }
+    .box-voucher-type .text-inside{
+    font-size: 20px;
+    }
+
 }
