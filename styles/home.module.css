@@ -3,7 +3,7 @@
   position: relative;
   min-height: 100vh;
   /* background: #374756; */
-  font-family: 'Quicksand', sans-serif;;
+
 }
 
 .header {
@@ -290,19 +290,21 @@ font-weight: 600;
 font-size: 20px;
 line-height: 28px;
 /* identical to box height, or 140% */
-
 display: flex;
 align-items: center;
 text-align: center;
-
 /* Neutral Grey/Gray 5 */
-
 color: #858585;
 width: 100%;
 padding:17px ;
+
 }
 @media screen and (min-width: 992px) {
   .popup-connect{
     width: 700px;
+  }
+  .contact-input {
+    font-size: 16px;
+    line-height: 20px;
   }
 }

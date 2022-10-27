@@ -1,6 +1,11 @@
 import usdc from "./Usdc.json";
 
-export const contractAddress = "0x7a3876445A53bdb7B2BAC8773BADc23E19cd4387";
+  export const serverURL =
+    process.env.URL_SERVER || "https://api.digitalvoucher.io";
+  // export const serverURL = "http://localhost:8000";
+  
+
+export const contractAddress = "0xA6D662dDB759F2A3C4240bca2e1cc86D383F9E71";
 export const shopdiAbi = [
   {
     type: "constructor",

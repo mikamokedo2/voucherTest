@@ -6,7 +6,7 @@ export default {
   buiFailed:"Giao dịch thất bại",
   tryAgain:"Đã xảy ra lỗi vui lòng thử lại!",
   contactHelp:"Yêu cầu trợ giúp",
-  disconnect:"Disconnect",
+  disconnect:"Ngắt kết nối",
   connectWallet:"KẾT NỔI VÍ",
   inBuyProgress:"Đang xử lý giao dich",
   noteProgress:"Vui lòng không tắt trang khi giao dịch đang hoàn tất.",
@@ -25,5 +25,7 @@ export default {
   agree:"Đồng ý với",
   condition:"điều khoản và điều kiện",
   totalCoin:"Tổng số xu",
-  coin:"Xu"
+  coin:"Xu",
+  faq:"Câu hỏi thường gặp",
+  buyNow:"MUA NGAY"
 };
