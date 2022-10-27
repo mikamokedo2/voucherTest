@@ -17,7 +17,6 @@ import { useWeb3 } from "../hook/web3";
 import Buy from "../components/Buy";
 
 const Home: NextPage = () => {
-  const { address } = useWeb3();
   const [openedPaying, setOpenedPayingPopup] = useState(false);
   const [isPaid, setIsPaid] = useState(false);
   const [dataQRCode, setDataQRCode] = useState("");
