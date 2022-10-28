@@ -52,7 +52,7 @@ const Header = () => {
               {new BigNumber(
                 new BigNumber(balance ?? 0)
                   .dividedBy(new BigNumber(10).pow(18))
-                  .toFixed(2, 1)
+                  .toFixed(0, 1)
               ).toNumber()}
               &nbsp;SHOD
             </div>
