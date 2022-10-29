@@ -17,5 +17,8 @@ module.exports = {
       },
     ]
   },
+<<<<<<< HEAD
+=======
 
+>>>>>>> prod
 }

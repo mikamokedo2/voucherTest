@@ -54,7 +54,7 @@
 
     position: absolute;
     top: 100%;
-    right: 30px;
+    right: 0px;
     border: none;
     height: auto;
     padding: 10px 16px;
@@ -118,7 +118,7 @@
 
 .seclecBox {
     padding: 32px 32px 0 32px;
-    margin-bottom: 100px;
+    margin-bottom: 60px;
 }
 
 .seclecBox_item {
@@ -148,7 +148,7 @@
     line-height: 130%;
     letter-spacing: -1px;
     margin-bottom: 24px;
-    color: #F4F6F8;
+    color: rgba(253, 209, 22, 1);
 }
 
 .content p {
@@ -256,6 +256,16 @@
 .popupBuy {
     max-width: 700px;
     margin: 0 auto;
+    position: fixed;
+    top: 50%;
+    left:50%;
+    transform: translate(-50%,-50%);
+    background: gray;
+    padding: 50px;
+    z-index: 99;
+}
+.popupBuy.popupBuy-white{
+    background-color: #fff;
 }
 
 .contact__suport {
@@ -266,7 +276,6 @@
 
 .contact__suport img {
     margin: 0 auto;
-    max-width: 400px;
     margin-bottom: 60px;
 }
 
@@ -378,11 +387,59 @@
     }
 
     .seclecBox_item {
-        padding: 8px 16px;
+        padding: 5px 10px;
     }
+    .popupBuy {
+        width: 93vw;
+        padding:50px 30px;
+    }
+    .contact__suport{
+        padding: 0 3%;
+    }
+    .contact__item div{
+        font-size: 16px;
+    }
+
+    
+}
+.rc-anchor-normal-footer{
+    display: none;
 }
 
-.big-icon {
-    height: 256px;
-    width: 256px;
+.box-voucher-type{
+    border-radius: 8px;
+    border:1px solid #fff;
+    height: 200px;
+    width: 430px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+.box-voucher-type .text-inside{
+    font-weight: 600;
+font-size: 30px;
+line-height: 134%;
+letter-spacing: -0.5px;
+color: #fff;
+}
+.home-description{
+    color: #fff;
+    font-size: 18px;
+    margin-top: 30px;
+    max-width: 363px;
+}
+.text-red{
+    color: red;
+}
+@media screen and (max-width: 768px) { 
+
+    .box-voucher-type{
+        height: 150px;
+    
+    }
+    .box-voucher-type .text-inside{
+    font-size: 20px;
+    }
+
 }
