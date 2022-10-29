@@ -10,42 +10,49 @@ const connectionWallet = [
     src: "/metamask.png",
     options: {},
     popular: true,
+    disabled:false
   },
   {
     name: "WalletConnect",
     src: "/wallconnect1.png",
     options: {},
     popular: true,
+    disabled:true
   },
   {
     name: "Binance Chain Wallet",
     src: "/binaneChain.png",
     options: {},
     popular: true,
+    disabled:true
   },
   {
     name: "TrustWallet",
     src: "/trustwallet.png",
     options: {},
     popular: true,
+    disabled:true
   },
   {
     name: "Math Wallet",
     src: "/math.png",
     options: {},
     popular: true,
+    disabled:true
   },
   {
     name: "TokenPocket",
     src: "/token.png",
     options: {},
     popular: true,
+    disabled:true
   },
   {
     name: "SafePal Wallet",
     src: "/safepal.png",
     options: {},
     popular: true,
+    disabled:true
   },
 ];
 
@@ -83,7 +90,7 @@ const WalletPopup: React.FC<WalletPopupProps> = ({
             <div
               key={connection.name}
               onClick={() => onSelectWallet(connection)}
-              className={`wallet__item flex flex-row cursor-pointer justify-between border-[1px] items-center mx-[32px] py-[12px] px-[11px] border-solid border-wid border-[#E0E0E0] ${
+              className={`${connection.disabled ? "pointer-events-none opacity-50" : "pointer-events-auto"} wallet__item flex flex-row cursor-pointer justify-between border-[1px] items-center mx-[32px] py-[12px] px-[11px] border-solid border-wid border-[#E0E0E0] ${
                 (walletSelect as any).name === connection.name ? "active" : ""
               }`}
             >
