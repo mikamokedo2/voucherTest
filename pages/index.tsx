@@ -16,6 +16,8 @@ import FaqPopup from "../components/FaqPopup";
 import { useWeb3 } from "../hook/web3";
 import Buy from "../components/Buy";
 
+// console.log(serverURL, socketURL);
+  
 const Home: NextPage = () => {
   const [openedPaying, setOpenedPayingPopup] = useState(false);
   const [isPaid, setIsPaid] = useState(false);

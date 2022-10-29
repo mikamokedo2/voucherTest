@@ -11,8 +11,8 @@ module.exports = {
       {
         source: "/_next/:path*",
         headers: [
-          { key: "Access-Control-Allow-Origin", value: "https://api-voucher.shopdi.io/" },
-          { key: "Access-Control-Allow-Origin", value: "https://api.shopdi.io/" },
+          { key: "Access-Control-Allow-Origin", value: "https://api-voucher.digitalvoucher.io/" },
+          { key: "Access-Control-Allow-Origin", value: "https://api-voucher.voucherdi.com/" },
         ],
       },
     ]
