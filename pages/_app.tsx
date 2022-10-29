@@ -7,11 +7,13 @@ import { ToastContainer } from "react-toastify";
 import AuthProvider from "../hook/web3";
 import '../styles/antd.css';
 import "../styles/faq.scss";
+import ProgressIndicator from "../components/Progress";
 
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <GoogleReCaptchaProvider reCaptchaKey="6LcfPlMiAAAAAElmb9nx2Ejm31DgWhznaSspvRpa">
+      <ProgressIndicator />
         <ToastContainer />
         <AuthProvider>
       <Component {...pageProps} />

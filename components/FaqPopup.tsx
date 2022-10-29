@@ -22,7 +22,7 @@ const FaqPopup: React.FC<FaqPopupProps> = ({ onClose }) => {
         <img
           onClick={onClose}
           className={style["img-close"]}
-          src="/multiply.png"
+          src="/assets/images/multiply.png"
         />
         <div className={`rounded-[4px] `}>
           <div className="text-lg mb-[20px] font-semibold">Điều kiện điều khoản sử dụng Voucher</div>

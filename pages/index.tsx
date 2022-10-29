@@ -34,13 +34,13 @@ const Home: NextPage = () => {
       <Header />
       <div className={`container mx-auto p-[16px] ${isBuyPage ? "hidden" : "block"}`}>
         <div className="flex justify-center">
-        <img src="/money.png" alt="" />
+        <img src="/assets/images/money.png" alt="" />
         </div>
        
         <h1 className="title_name">{t.buyVoucher}</h1>
         <div className="flex gap-x-[10px]">
             <div className="box-voucher-type">
-            <img src="/shopdi.png" alt="" />
+            <img src="/assets/images/shopdi.png" alt="" />
             </div>
             <div className="box-voucher-type">
             <div className="text-inside">Comming soon ...</div>

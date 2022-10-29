@@ -20,7 +20,7 @@ const Loading = () => {
         <div className="border-solid border-[1px]   border-[#666666] loading_item ">
           <div className="w-[100%] h-[100%]  flex flex-row items-center justify-center loading_item-box ">
             <span className="text-white font-medium   ">
-              <img src="/loading.png" className="icon_load" />
+              <img src="/assets/images/loading.png" className="icon_load" />
             </span>
           </div>
         </div>

@@ -3,11 +3,11 @@ import style from "../styles/home.module.css";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import axios from "axios";
-import {serverURL} from "../pages/index";
 import { toast } from "react-toastify";
 import { useRouter } from "next/router";
 import en from "../locales/en";
 import vn from "../locales/vn";
+import { serverURL } from '../constants/const';
 
 export const validationPhoneSchema = yup.object({
   phone: yup.string().required("Bạn chưa nhập số điện thoại"),

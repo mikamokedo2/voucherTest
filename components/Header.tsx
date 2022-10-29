@@ -15,7 +15,7 @@ const Header = () => {
   const [isActive, setIsActive] = useState(false);
   const [walletSelect, setWalletSelect] = useState({
     name: "Metamask",
-    src: "/metamask.png",
+    src: "/assets/images/metamask.png",
     options: {},
     popular: true,
   });
