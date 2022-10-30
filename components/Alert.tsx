@@ -39,7 +39,7 @@ const Success: React.FC<SuccessProps> = ({ dataQRCode, onClosed }) => {
               {dataQRCode}
             </span>
             <span onClick={handleCopied} className="cursor-pointer">
-              <img src="/doc.png" />
+              <img src="/assets/images/doc.png" />
             </span>
           </h1>
           <QRCode value={dataQRCode} level={"H"} />

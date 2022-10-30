@@ -21,14 +21,14 @@ const ErrorPopup:React.FC<ErrorPopupProps> = ({onClose}) => {
       <img
        onClick={onClose}
           className={style["img-close"]}
-          src="/multiply.png"
+          src="/assets/images/multiply.png"
         />
         <div className={`rounded-[4px] `}>
           <div className="flex px-[8px] flex-row loading">
             <div className="border-solid border-[1px]   border-[#666666] loading_item ">
               <div className="w-[100%] h-[100%]  flex flex-row items-center justify-center loading_item-box ">
                 <span className="text-white font-medium   ">
-                  <img src="/err.png" className="icon_load" />
+                  <img src="/assets/images/err.png" className="icon_load" />
                 </span>
               </div>
             </div>

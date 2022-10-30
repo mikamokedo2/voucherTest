@@ -7,49 +7,49 @@ import vn from "../locales/vn";
 const connectionWallet = [
   {
     name: "Metamask",
-    src: "/metamask.png",
+    src: "/assets/images/metamask.png",
     options: {},
     popular: true,
     disabled:false
   },
   {
     name: "WalletConnect",
-    src: "/wallconnect1.png",
+    src: "/assets/images/wallconnect1.png",
     options: {},
     popular: true,
     disabled:true
   },
   {
     name: "Binance Chain Wallet",
-    src: "/binaneChain.png",
+    src: "/assets/images/binaneChain.png",
     options: {},
     popular: true,
     disabled:true
   },
   {
     name: "TrustWallet",
-    src: "/trustwallet.png",
+    src: "/assets/images/trustwallet.png",
     options: {},
     popular: true,
     disabled:true
   },
   {
     name: "Math Wallet",
-    src: "/math.png",
+    src: "/assets/images/math.png",
     options: {},
     popular: true,
     disabled:true
   },
   {
     name: "TokenPocket",
-    src: "/token.png",
+    src: "/assets/images/token.png",
     options: {},
     popular: true,
     disabled:true
   },
   {
     name: "SafePal Wallet",
-    src: "/safepal.png",
+    src: "/assets/images/safepal.png",
     options: {},
     popular: true,
     disabled:true
@@ -82,7 +82,7 @@ const WalletPopup: React.FC<WalletPopupProps> = ({
         <img
           onClick={onClose}
           className={style["img-close"]}
-          src="/multiply.png"
+          src="/assets/images/multiply.png"
         />
         <p className={style.titleConnect}>{t.connectOneWallet}</p>
         <div className={"flex flex-col"}>

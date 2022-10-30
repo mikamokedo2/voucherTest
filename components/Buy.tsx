@@ -123,7 +123,7 @@ const Buy: React.FC<BuyProps> = ({
   return (
     <main className={`p-[16px] ${!isShow ? "hidden" : "mainContent"}`}>
       <div className="main_top flex">
-        <img src="/money.png" alt="" />
+        <img src="/assets/images/money.png" alt="" />
       </div>
       <section className="main__mid">
         <section className={style["section-buyer"]}>
