@@ -13,7 +13,6 @@ import ErrorPopup from "../components/ErrorPopup";
 import Success from "../components/Alert";
 import "yup-phone";
 import FaqPopup from "../components/FaqPopup";
-import { useWeb3 } from "../hook/web3";
 import Buy from "../components/Buy";
 
 // console.log(serverURL, socketURL);

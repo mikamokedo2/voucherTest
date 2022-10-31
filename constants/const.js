@@ -1,8 +1,8 @@
 import usdc from "./Usdc.json";
 
-  export const serverURL =
-    process.env.URL_SERVER || "https://api.digitalvoucher.io";
-  // export const serverURL = "http://localhost:8000";
+  // export const serverURL =
+  //   process.env.URL_SERVER || "https://api.digitalvoucher.io";
+  export const serverURL = "http://localhost:8000";
   
 
 export const contractAddress = "0xA6D662dDB759F2A3C4240bca2e1cc86D383F9E71";

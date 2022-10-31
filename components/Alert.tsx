@@ -27,7 +27,7 @@ const Success: React.FC<SuccessProps> = ({ dataQRCode, onClosed }) => {
       className={`fixed w-[100vw] h-[100vh] bg-[black] bg-opacity-40 popupWallet`}
     >
       <div className="popupBuy">
-        <div className={`rounded-[4px] `}>
+        <div className={`rounded-[4px] flex flex-col items-center`}>
           <h3 className="text-white font-semibold text-[16px] text-center">
             {t.yourVoucher} :
           </h3>

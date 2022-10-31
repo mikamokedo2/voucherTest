@@ -60,7 +60,6 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [contractWallet, setContractWallet] = useState("");
   const [rateConvert, setRateConvert] = useState(1);
   const [balance, setBalance] = useState(0);
-
   useEffect(() => {
     const getAdminWallet = async () => {
       try {
@@ -69,7 +68,7 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         );
         if (data.success) {
           setAdminWallet(data.data.wallet);
-          setRateConvert(data.data.rate);
+          setRateConvert(data.data.price / 1000);
           setContractWallet(data.data.contractAddress);
         }
       } catch (error) {
