@@ -47,7 +47,7 @@ const Buy: React.FC<BuyProps> = ({
   const [valueVoucher, setValueVoucher] = useState(1000);
   const { locale } = router;
   const t = locale === "en" ? en : vn;
-  const { address, contract, netWork, adminWallet, rateConvert,fetchBalance } = useWeb3();
+  const { address, contract, netWork, adminWallet, rateConvert,getAdminWallet } = useWeb3();
   const increment = async () => {
     let num = count + 1;
     setCount(num);
@@ -73,6 +73,7 @@ const Buy: React.FC<BuyProps> = ({
         return;
       }
       try {
+        getAdminWallet && await getAdminWallet();
         setOpenedPayingPopup(true);
         const result = await contract.methods
           .approve(
@@ -95,7 +96,8 @@ const Buy: React.FC<BuyProps> = ({
               10 ** decimals
             ).toString(),
             value: valueVoucher,
-            emailorphone: value.phone ?? value.email,
+            phone: value.phone,
+            email:value.email,
             txt: result.transactionHash,
             captcha,
             netWork,
@@ -103,7 +105,6 @@ const Buy: React.FC<BuyProps> = ({
           if (data.success) {
             setIsPaid(true);
             setDataQRCode(data.data.code);
-            fetchBalance && fetchBalance();
           } else {
             setErr(true);
             setOpenedPayingPopup(false);

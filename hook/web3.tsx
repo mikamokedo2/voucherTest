@@ -32,6 +32,7 @@ interface ContextType {
   rateConvert: number;
   balance: number;
   fetchBalance?: () => void;
+  getAdminWallet?:() => Promise<any>;
 }
 const initialState: ContextType = {
   web3: undefined,
@@ -87,8 +88,7 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   );
 
   useEffect(() => {
-    const time = setInterval(getAdminWallet, 3000);
-    return () => clearInterval(time);
+    getAdminWallet();
   }, [netWork]);
 
   useEffect(() => {
@@ -249,6 +249,7 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         adminWallet,
         rateConvert,
         fetchBalance,
+        getAdminWallet
       }}
     >
       {children}
