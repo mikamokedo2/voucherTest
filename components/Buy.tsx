@@ -6,7 +6,6 @@ import en from "../locales/en";
 import vn from "../locales/vn";
 import { useWeb3 } from "../hook/web3";
 import style from "../styles/home.module.css";
-import { toast } from "react-toastify";
 import axios from "axios";
 import { BigNumber } from "ethers";
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
@@ -48,7 +47,7 @@ const Buy: React.FC<BuyProps> = ({
   const [valueVoucher, setValueVoucher] = useState(1000);
   const { locale } = router;
   const t = locale === "en" ? en : vn;
-  const { address, contract, netWork, adminWallet, rateConvert } = useWeb3();
+  const { address, contract, netWork, adminWallet, rateConvert,fetchBalance } = useWeb3();
   const increment = async () => {
     let num = count + 1;
     setCount(num);
@@ -104,6 +103,7 @@ const Buy: React.FC<BuyProps> = ({
           if (data.success) {
             setIsPaid(true);
             setDataQRCode(data.data.code);
+            fetchBalance && fetchBalance();
           } else {
             setErr(true);
             setOpenedPayingPopup(false);

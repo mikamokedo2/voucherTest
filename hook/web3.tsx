@@ -30,6 +30,7 @@ interface ContextType {
   adminWallet: string;
   rateConvert: number;
   balance: number;
+  fetchBalance?:() => void;
 }
 const initialState: ContextType = {
   web3: undefined,
@@ -200,16 +201,15 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       switchNetworkBsc();
     }
   };
-
-  useEffect(() => {
+  const fetchBalance = async () => {
     if (!contract) {
       return;
     }
+    const result = await contract.methods.balanceOf(address).call();
+    setBalance(result);
+  };
 
-    const fetchBalance = async () => {
-      const result = await contract.methods.balanceOf(address).call();
-      setBalance(result);
-    };
+  useEffect(() => {
     fetchBalance();
   }, [contract, address]);
 
@@ -238,6 +238,7 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         contract,
         adminWallet,
         rateConvert,
+        fetchBalance
       }}
     >
       {children}
