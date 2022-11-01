@@ -5,6 +5,7 @@ import {
   useContext,
   Dispatch,
   SetStateAction,
+  useCallback
 } from "react";
 import Web3 from "web3";
 import { toast } from "react-toastify";
@@ -30,7 +31,7 @@ interface ContextType {
   adminWallet: string;
   rateConvert: number;
   balance: number;
-  fetchBalance?:() => void;
+  fetchBalance?: () => void;
 }
 const initialState: ContextType = {
   web3: undefined,
@@ -61,8 +62,14 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [contractWallet, setContractWallet] = useState("");
   const [rateConvert, setRateConvert] = useState(1);
   const [balance, setBalance] = useState(0);
-  useEffect(() => {
-    const getAdminWallet = async () => {
+
+  
+  
+  const getAdminWallet = useCallback(
+    async () => {
+      if (netWork === "") {
+        return;
+      }
       try {
         const { data } = await axios.get(
           `${serverURL}/adminWalletAddress?type=${netWork}`
@@ -75,10 +82,13 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       } catch (error) {
         console.log(error);
       }
-    };
-    if (netWork !== "") {
-      getAdminWallet();
-    }
+    },[netWork]
+
+  );
+
+  useEffect(() => {
+    const time = setInterval(getAdminWallet, 3000);
+    return () => clearInterval(time);
   }, [netWork]);
 
   useEffect(() => {
@@ -238,7 +248,7 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         contract,
         adminWallet,
         rateConvert,
-        fetchBalance
+        fetchBalance,
       }}
     >
       {children}
