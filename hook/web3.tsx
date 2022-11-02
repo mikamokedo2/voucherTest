@@ -5,7 +5,7 @@ import {
   useContext,
   Dispatch,
   SetStateAction,
-  useCallback
+  useCallback,
 } from "react";
 import Web3 from "web3";
 import { toast } from "react-toastify";
@@ -32,7 +32,7 @@ interface ContextType {
   rateConvert: number;
   balance: number;
   fetchBalance?: () => void;
-  getAdminWallet?:() => Promise<any>;
+  getAdminWallet?: () => Promise<any>;
 }
 const initialState: ContextType = {
   web3: undefined,
@@ -64,53 +64,46 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [rateConvert, setRateConvert] = useState(1);
   const [balance, setBalance] = useState(0);
 
-  
-  
-  const getAdminWallet = useCallback(
-    async () => {
-      if (netWork === "") {
-        return;
+  const getAdminWallet = useCallback(async () => {
+    if (netWork === "") {
+      return;
+    }
+    try {
+      const { data } = await axios.get(
+        `${serverURL}/adminWalletAddress?type=${netWork}`
+      );
+      if (data.success) {
+        setAdminWallet(data.data.wallet);
+        setRateConvert(data.data.price / 1000);
+        setContractWallet(data.data.contractAddress);
       }
-      try {
-        const { data } = await axios.get(
-          `${serverURL}/adminWalletAddress?type=${netWork}`
-        );
-        if (data.success) {
-          setAdminWallet(data.data.wallet);
-          setRateConvert(data.data.price / 1000);
-          setContractWallet(data.data.contractAddress);
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    },[netWork]
-
-  );
+    } catch (error) {
+      console.log(error);
+    }
+  }, [netWork]);
 
   useEffect(() => {
     getAdminWallet();
   }, [netWork]);
 
   useEffect(() => {
-    if(web3 === undefined || contractWallet === ""){
+    if (web3 === undefined || contractWallet === "") {
       return;
     }
 
-      setContract(shodiContract(web3, contractWallet));
-    
+    setContract(shodiContract(web3, contractWallet));
   }, [web3, contractWallet]);
 
   const handleConnectSuccess = async () => {
     if (window.ethereum) {
+      await window.ethereum.request({ method: "eth_requestAccounts" });
       const web3 = new Web3(window.ethereum);
-      if(web3 !== undefined){
+      if (web3 !== undefined) {
+        setWeb3(web3);
         const [accounts] = await web3.eth.getAccounts();
         web3.eth.defaultAccount = accounts;
-        const accountsChecksum = web3.utils.toChecksumAddress(accounts);
-        setAddress(accountsChecksum);
-        setWeb3(web3);
+        setAddress(accounts);
       }
-
     }
   };
 
@@ -176,7 +169,7 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
                   rpcUrls: [urlBsc],
                   nativeCurrency: {
                     name: "BNB TESTNET",
-                    symbol:"TBNB",
+                    symbol: "TBNB",
                     decimals: 18,
                   },
                   blockExplorerUrls: [blockExplorerUrlsBsc],
@@ -217,7 +210,7 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     }
   };
   const fetchBalance = async () => {
-    if (!contract) {
+    if (!contract || address === "") {
       return;
     }
     const result = await contract.methods.balanceOf(address).call();
@@ -255,7 +248,7 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         adminWallet,
         rateConvert,
         fetchBalance,
-        getAdminWallet
+        getAdminWallet,
       }}
     >
       {children}
