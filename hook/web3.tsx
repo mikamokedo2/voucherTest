@@ -105,6 +105,7 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       const web3 = new Web3(window.ethereum);
       if(web3 !== undefined){
         const [accounts] = await web3.eth.getAccounts();
+        web3.eth.defaultAccount = accounts;
         const accountsChecksum = web3.utils.toChecksumAddress(accounts);
         setAddress(accountsChecksum);
         setWeb3(web3);
@@ -235,6 +236,7 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         }
         web3.eth.getAccounts(function (error, accounts) {
           setAddress(accounts[0]);
+          web3.eth.defaultAccount = accounts[0];
         });
       });
     }
