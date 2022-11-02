@@ -20,7 +20,7 @@ const urlKai = "https://dev.kardiachain.io/";
 const urlBsc = "https://data-seed-prebsc-1-s1.binance.org:8545/";
 const symbol = "KAI";
 const blockExplorerUrlsKai = "https://explorer-dev.kardiachain.io";
-const blockExplorerUrlsBsc = "https://testnet.bscscan.com/";
+const blockExplorerUrlsBsc = "https://testnet.bscscan.com";
 interface ContextType {
   web3?: Web3;
   address: string;
@@ -92,18 +92,25 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   }, [netWork]);
 
   useEffect(() => {
-    if (web3 && contractWallet !== "") {
-      setContract(shodiContract(web3, contractWallet));
+    if(web3 === undefined || contractWallet === ""){
+      return;
     }
+
+      setContract(shodiContract(web3, contractWallet));
+    
   }, [web3, contractWallet]);
 
   const handleConnectSuccess = async () => {
     if (window.ethereum) {
       const web3 = new Web3(window.ethereum);
-      const [accounts] = await web3.eth.getAccounts();
-      const accountsChecksum = web3.utils.toChecksumAddress(accounts);
-      setAddress(accountsChecksum);
-      setWeb3(web3);
+      if(web3 !== undefined){
+        const [accounts] = await web3.eth.getAccounts();
+        web3.eth.defaultAccount = accounts;
+        const accountsChecksum = web3.utils.toChecksumAddress(accounts);
+        setAddress(accountsChecksum);
+        setWeb3(web3);
+      }
+
     }
   };
 
@@ -137,10 +144,9 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
             });
             handleConnectSuccess();
           } catch (error: any) {
-            toast.error(error.message);
+            console.log(error.message);
           }
         }
-        toast.error(error.message);
       }
     } else {
       toast.error(
@@ -169,8 +175,8 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
                   chainName: "Bsc Testnet",
                   rpcUrls: [urlBsc],
                   nativeCurrency: {
-                    name: "KAI TESTNET",
-                    symbol,
+                    name: "BNB TESTNET",
+                    symbol:"TBNB",
                     decimals: 18,
                   },
                   blockExplorerUrls: [blockExplorerUrlsBsc],
@@ -179,10 +185,9 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
             });
             handleConnectSuccess();
           } catch (error: any) {
-            toast.error(error.message);
+            console.log(error.message);
           }
         }
-        toast.error(error.message);
       }
     } else {
       toast.error(
@@ -231,6 +236,7 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         }
         web3.eth.getAccounts(function (error, accounts) {
           setAddress(accounts[0]);
+          web3.eth.defaultAccount = accounts[0];
         });
       });
     }
