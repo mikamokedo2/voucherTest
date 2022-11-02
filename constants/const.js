@@ -1,6 +1,6 @@
-  export const serverURL =
-    process.env.URL_SERVER || "https://api.digitalvoucher.io";
-  // export const serverURL = "http://localhost:8000";
+  // export const serverURL =
+  //   process.env.URL_SERVER || "https://api.digitalvoucher.io";
+  export const serverURL = "http://localhost:8000";
   
 export const shopdiAbi = [
   {
