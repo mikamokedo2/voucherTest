@@ -65,7 +65,7 @@ const Buy: React.FC<BuyProps> = ({
     initialValues: {
       phone: "",
       email: "",
-      agree: true,
+      agree: false,
     },
     validationSchema: validationPhoneSchema,
     onSubmit: async (value) => {
