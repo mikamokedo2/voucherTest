@@ -5,6 +5,7 @@ import {
   useContext,
   Dispatch,
   SetStateAction,
+  useCallback
 } from "react";
 import Web3 from "web3";
 import { toast } from "react-toastify";
@@ -30,6 +31,8 @@ interface ContextType {
   adminWallet: string;
   rateConvert: number;
   balance: number;
+  fetchBalance?: () => void;
+  getAdminWallet?:() => Promise<any>;
 }
 const initialState: ContextType = {
   web3: undefined,
@@ -61,24 +64,31 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [rateConvert, setRateConvert] = useState(1);
   const [balance, setBalance] = useState(0);
 
-  useEffect(() => {
-    const getAdminWallet = async () => {
+  
+  
+  const getAdminWallet = useCallback(
+    async () => {
+      if (netWork === "") {
+        return;
+      }
       try {
         const { data } = await axios.get(
           `${serverURL}/adminWalletAddress?type=${netWork}`
         );
         if (data.success) {
           setAdminWallet(data.data.wallet);
-          setRateConvert(data.data.rate);
+          setRateConvert(data.data.price / 1000);
           setContractWallet(data.data.contractAddress);
         }
       } catch (error) {
         console.log(error);
       }
-    };
-    if (netWork !== "") {
-      getAdminWallet();
-    }
+    },[netWork]
+
+  );
+
+  useEffect(() => {
+    getAdminWallet();
   }, [netWork]);
 
   useEffect(() => {
@@ -201,16 +211,15 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       switchNetworkBsc();
     }
   };
-
-  useEffect(() => {
+  const fetchBalance = async () => {
     if (!contract) {
       return;
     }
+    const result = await contract.methods.balanceOf(address).call();
+    setBalance(result);
+  };
 
-    const fetchBalance = async () => {
-      const result = await contract.methods.balanceOf(address).call();
-      setBalance(result);
-    };
+  useEffect(() => {
     fetchBalance();
   }, [contract, address]);
 
@@ -239,6 +248,8 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         contract,
         adminWallet,
         rateConvert,
+        fetchBalance,
+        getAdminWallet
       }}
     >
       {children}

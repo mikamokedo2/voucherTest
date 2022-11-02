@@ -6,24 +6,16 @@ import en from "../locales/en";
 import vn from "../locales/vn";
 import { useWeb3 } from "../hook/web3";
 import style from "../styles/home.module.css";
-import { toast } from "react-toastify";
 import axios from "axios";
 import { BigNumber } from "ethers";
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 import { serverURL } from "../constants/const";
+import { message } from "antd";
 
 export const validationPhoneSchema = yup.object({
-  phone: yup
-    .string()
-    .phone("VN")
-    .test(function (value) {
-      const { email } = this.parent;
-      if (!email) return value != null;
-      return true;
-    }),
-  email: yup.string().email("Invalid email format"),
-  agree: yup.boolean()
-  .oneOf([true], "Bạn phải đồng ý với điều khoản sử dụng")
+  phone: yup.string().phone("VN"),
+  email: yup.string().required().email("Invalid email format"),
+  agree: yup.boolean().oneOf([true], "Bạn phải đồng ý với điều khoản sử dụng"),
 });
 
 const decimals = 18;
@@ -36,6 +28,10 @@ interface BuyProps {
   setDataQRCode: (state: string) => void;
   isShow: boolean;
 }
+
+const convertVoucherToShod = (amount: number, rate: number) => {
+  return (amount / rate).toFixed(18);
+};
 
 const Buy: React.FC<BuyProps> = ({
   setFaq,
@@ -51,8 +47,7 @@ const Buy: React.FC<BuyProps> = ({
   const [valueVoucher, setValueVoucher] = useState(1000);
   const { locale } = router;
   const t = locale === "en" ? en : vn;
-  const { address, contract, netWork, adminWallet, rateConvert } = useWeb3();
-
+  const { address, contract, netWork, adminWallet, rateConvert,getAdminWallet } = useWeb3();
   const increment = async () => {
     let num = count + 1;
     setCount(num);
@@ -78,13 +73,15 @@ const Buy: React.FC<BuyProps> = ({
         return;
       }
       try {
+        getAdminWallet && await getAdminWallet();
         setOpenedPayingPopup(true);
         const result = await contract.methods
           .approve(
             adminWallet,
-            BigNumber.from(valueVoucher * rateConvert)
-              .mul(BigNumber.from(10).pow(decimals))
-              .toString()
+            (
+              Number(convertVoucherToShod(valueVoucher, rateConvert)) *
+              10 ** decimals
+            ).toString()
           )
           .send({
             from: address,
@@ -94,11 +91,13 @@ const Buy: React.FC<BuyProps> = ({
           const captcha = await getToken("signup");
           const { data } = await axios.post(`${serverURL}/order`, {
             user: address,
-            amount: BigNumber.from(valueVoucher * rateConvert)
-              .mul(BigNumber.from(10).pow(decimals))
-              .toString(),
+            amount: (
+              Number(convertVoucherToShod(valueVoucher, rateConvert)) *
+              10 ** decimals
+            ).toString(),
             value: valueVoucher,
-            emailorphone: value.phone ?? value.email,
+            phone: value.phone,
+            email:value.email,
             txt: result.transactionHash,
             captcha,
             netWork,
@@ -114,6 +113,7 @@ const Buy: React.FC<BuyProps> = ({
 
         setOpenedPayingPopup(false);
       } catch (error: any) {
+        console.log(error);
         setErr(true);
         setOpenedPayingPopup(false);
       }
@@ -146,7 +146,10 @@ const Buy: React.FC<BuyProps> = ({
           </div>
           <div className={style["title-price"]}>Payment Wallet</div>
           <h1 className={style["token-id"]}>
-            {valueVoucher * rateConvert} SHOD
+            {address === ""
+              ? 0
+              : convertVoucherToShod(valueVoucher, rateConvert)}{" "}
+            SHOD
           </h1>
           <div className="hr"></div>
           <div className="buyer__item">
@@ -197,15 +200,18 @@ const Buy: React.FC<BuyProps> = ({
               </span>
             </span>
             {formik.touched.agree && Boolean(formik.errors.agree) && (
-                  <div className="text-red mt-2">
-                    {formik.errors.agree}
-                  </div>
-                )}
+              <div className="text-red mt-2">{formik.errors.agree}</div>
+            )}
             <button
               type="button"
-              onClick={() => formik.handleSubmit()}
+              onClick={() => {
+                if (address === "") {
+                  message.warning("Kết nối ví để tiếp tục!");
+                } else {
+                  formik.handleSubmit();
+                }
+              }}
               className={style["button-buy"]}
-              disabled={address === ""}
             >
               {t.buy}
             </button>

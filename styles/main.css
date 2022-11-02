@@ -317,6 +317,10 @@
     background: #232732;
     padding-top: 8px;
 }
+.ant-message-custom-content{
+    display: flex;
+    align-items: center;
+}
 
 @keyframes ani1 {
     from {

@@ -13,8 +13,8 @@ import ErrorPopup from "../components/ErrorPopup";
 import Success from "../components/Alert";
 import "yup-phone";
 import FaqPopup from "../components/FaqPopup";
-import { useWeb3 } from "../hook/web3";
 import Buy from "../components/Buy";
+import { useWeb3 } from "../hook/web3";
 
 // console.log(serverURL, socketURL);
   
@@ -28,6 +28,7 @@ const Home: NextPage = () => {
   const router = useRouter();
   const { locale } = router;
   const t = locale === "en" ? en : vn;
+  const { fetchBalance } = useWeb3();
 
   return (
     <div className={style.root}>
@@ -70,6 +71,7 @@ const Home: NextPage = () => {
         <Success
           dataQRCode={dataQRCode}
           onClosed={() => {
+            fetchBalance && fetchBalance();
             setDataQRCode("");
             setIsPaid(false);
           }}
