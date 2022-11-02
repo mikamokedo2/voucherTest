@@ -175,7 +175,7 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
                   chainName: "Bsc Testnet",
                   rpcUrls: [urlBsc],
                   nativeCurrency: {
-                    name: "KAI TESTNET",
+                    name: "BNB TESTNET",
                     symbol:"TBNB",
                     decimals: 18,
                   },
