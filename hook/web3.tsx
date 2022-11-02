@@ -144,7 +144,7 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
             });
             handleConnectSuccess();
           } catch (error: any) {
-            toast.error(error.message);
+            console.log(error.message);
           }
         }
       }
@@ -185,7 +185,7 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
             });
             handleConnectSuccess();
           } catch (error: any) {
-            toast.error(error.message);
+            console.log(error.message);
           }
         }
       }
