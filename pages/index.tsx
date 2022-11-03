@@ -15,6 +15,7 @@ import "yup-phone";
 import FaqPopup from "../components/FaqPopup";
 import Buy from "../components/Buy";
 import { useWeb3 } from "../hook/web3";
+import Footer from "../components/Footer";
 
 // console.log(serverURL, socketURL);
   
@@ -78,6 +79,7 @@ const Home: NextPage = () => {
         />
       )}
       {faq && <FaqPopup onClose={() => setFaq(false)} />}
+      <Footer />
     </div>
   );
 };
