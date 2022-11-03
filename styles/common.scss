@@ -1,0 +1,71 @@
+.logo-head{
+    max-width: 60%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.seclecBox{
+    img{
+        width: 70%;
+        max-width: 200px;
+    }
+}
+.brach{
+    position: relative;
+    min-height: 500px;
+    img{
+        width: 80%;
+    }
+    .slick-prev{
+        left: -10px;
+    }
+    .slick-next{
+        right: -10px;
+    }
+    .slick-prev, .slick-next{
+        z-index: 1;
+    }
+    .slick-list{
+        z-index: 0;
+    }
+    .react-tabs{
+        width: 100%;
+    }
+    .react-tabs__tab--selected{
+        background: none;
+        border: 0px solid #fff;
+        border-color: unset;
+        color: #fff;
+    }
+    .react-tabs__tab-list{
+        border: 0px solid #fff;
+    }
+    .react-tabs__tab-panel{
+        color: #fff;
+    }
+    .slick-slider {
+        width: 100%;
+        .slick-slide{
+            height: auto;
+            .box-voucher-type{
+                max-width: 85%;
+                margin: 0 auto;
+                height: 8rem;
+                display: flex !important;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                &:hover{
+                    opacity: 0.5;
+                }
+                @media (max-width: 768px) {
+                    height: 6rem;
+                }
+            }
+            .active{
+                border: 3px solid #ACD9EE;
+                background: rgba(172, 217, 238, 0.2);
+            }
+        }
+    }
+}

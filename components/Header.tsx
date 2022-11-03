@@ -46,7 +46,9 @@ const Header = () => {
       />
       <div className="d-flex align-items-center justify-between ">
         <SelectLanguage />
-        <img src="assets/images/logo-header.png"/>
+        <div className="logo-head">
+          <img src="assets/images/logo-header.png"/>
+        </div>
         {isConnected ? (
           <div className="flex">
             <div className="seclecBox_item mr-[10px]">
