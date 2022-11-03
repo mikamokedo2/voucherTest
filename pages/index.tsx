@@ -15,9 +15,10 @@ import "yup-phone";
 import FaqPopup from "../components/FaqPopup";
 import Buy from "../components/Buy";
 import { useWeb3 } from "../hook/web3";
+import Footer from "../components/Footer";
+import Slider from "react-slick";
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 
-// console.log(serverURL, socketURL);
-  
 const Home: NextPage = () => {
   const [openedPaying, setOpenedPayingPopup] = useState(false);
   const [isPaid, setIsPaid] = useState(false);
@@ -25,43 +26,107 @@ const Home: NextPage = () => {
   const [faq, setFaq] = useState(false);
   const [err, setErr] = useState(false);
   const [isBuyPage, setIsBuyPage] = useState(false);
+  const [tabIndex, setTabIndex] = useState(0);
   const router = useRouter();
   const { locale } = router;
   const t = locale === "en" ? en : vn;
   const { fetchBalance } = useWeb3();
-
+  const settings = {
+    infinite: true,
+    speed: 500,
+    slidesToShow: 4,
+    slidesToScroll: 1,
+    centerPadding: '10px',
+    responsive: [
+      {
+        breakpoint: 768,
+        settings: {
+          slidesToShow: 3,
+        },
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 2,
+        },
+      },
+    ],
+  };
+  const CustomTab = ({onClick, children} : any) => {
+    return <div onClick={onClick}>{children}</div>
+  };
+  CustomTab.tabsRole = 'Tab';
   return (
     <div className={style.root}>
       <Header />
       <div className={`container mx-auto p-[16px] ${isBuyPage ? "hidden" : "block"}`}>
-        <div className="flex justify-center">
-        <img src="/assets/images/money.png" alt="" />
-        </div>
-       
         <h1 className="title_name">{t.buyVoucher}</h1>
-        <div className="flex gap-x-[10px]">
-            <div className="box-voucher-type">
-            <img src="/assets/images/shopdi.png" alt="" />
-            </div>
-            <div className="box-voucher-type">
-            <div className="text-inside">Comming soon ...</div>
-            </div>
+        <div className="flex gap-x-[10px] brach">
+        <Tabs
+          selectedIndex={tabIndex}
+          onSelect={index => setTabIndex(index)}
+        >
+        <TabList>
+          <Slider {...settings}>
+              <CustomTab onClick={()=> setTabIndex(0)}>
+                <div className="box-voucher-type active">
+                  <img src="/assets/images/logo-shopdi.png" alt="" />
+                </div>
+              </CustomTab>
+              <CustomTab onClick={()=> setTabIndex(1)}>
+                <div className="box-voucher-type">
+                  <div className="text-inside">Comming soon ...</div>
+                </div>
+              </CustomTab>
+              <CustomTab onClick={()=> setTabIndex(1)}>
+                <div className="box-voucher-type">
+                  <div className="text-inside">Comming soon ...</div>
+                </div>
+              </CustomTab>
+              <CustomTab onClick={()=> setTabIndex(1)}>
+                <div className="box-voucher-type">
+                  <div className="text-inside">Comming soon ...</div>
+                </div>
+              </CustomTab>
+              <CustomTab onClick={()=> setTabIndex(1)}>
+                <div className="box-voucher-type">
+                  <div className="text-inside">Comming soon ...</div>
+                </div>
+              </CustomTab>
+          </Slider>
+        </TabList>
+        <TabPanel>
+          <div className="home-description">
+          Bạn có thể mua voucher để quy đổi Shopdi Xu và bắt đầu trải nghiệm các tính năng nổi bật tại Shopdi. Voucher sẽ được tự động lưu lại tại Ví Shopdi trong tài khoản của bạn.
+          </div>
+          <div className="seclecBox_item mt-[30px] w-[150px] mb-[100px] text-center" onClick={() => setIsBuyPage(true)}>
+          {t.buyNow}
+          </div>
+          <Buy
+            setFaq={() => setFaq(true)}
+            setOpenedPayingPopup={(state) => setOpenedPayingPopup(state)}
+            setErr={(state) => setErr(state)}
+            setIsPaid={(state) => setIsPaid(state)}
+            setDataQRCode={(state) => setDataQRCode(state)}
+            isShow={isBuyPage}
+          />
+        </TabPanel>
+        <TabPanel>
+          <h2>Coming soon</h2>
+        </TabPanel>
+        <TabPanel>
+          <h2>Coming soon</h2>
+        </TabPanel>
+        <TabPanel>
+          <h2>Coming soon</h2>
+        </TabPanel>
+        <TabPanel>
+          <h2>Coming soon</h2>
+        </TabPanel>
+      </Tabs>
         </div>
-        <div className="home-description">
-        Bạn có thể mua voucher để quy đổi Shopdi Xu và bắt đầu trải nghiệm các tính năng nổi bật tại Shopdi. Voucher sẽ được tự động lưu lại tại Ví Shopdi trong tài khoản của bạn.
-        </div>
-        <div className="seclecBox_item mt-[30px] w-[150px] mb-[100px] text-center" onClick={() => setIsBuyPage(true)}>
-        {t.buyNow}
-        </div>
+
       </div>
-      <Buy
-        setFaq={() => setFaq(true)}
-        setOpenedPayingPopup={(state) => setOpenedPayingPopup(state)}
-        setErr={(state) => setErr(state)}
-        setIsPaid={(state) => setIsPaid(state)}
-        setDataQRCode={(state) => setDataQRCode(state)}
-        isShow={isBuyPage}
-      />
 
       {/* ----------------------Thông báo---------------------------  */}
       {/* <Alert isPaid={isPaid} err={err} ethercanLink={ethercanLink} /> */}
@@ -78,6 +143,7 @@ const Home: NextPage = () => {
         />
       )}
       {faq && <FaqPopup onClose={() => setFaq(false)} />}
+      <Footer />
     </div>
   );
 };

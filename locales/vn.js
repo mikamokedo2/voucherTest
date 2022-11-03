@@ -19,7 +19,7 @@ export default {
   connectOneWallet:"Chọn ví bạn đang dùng",
   selectWallet:"Chọn ví",
   mustInput:"Vui lòng nhập số điện thoại hoặc email",
-  buyVoucher:"Mua Voucher",
+  buyVoucher:"ĐỔI VOUCHER NGAY",
   amountVoucher:"Nhập giá trị Voucher",
   buy:"Mua",
   agree:"Đồng ý với",

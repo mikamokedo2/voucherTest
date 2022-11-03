@@ -8,6 +8,10 @@ import AuthProvider from "../hook/web3";
 import '../styles/antd.css';
 import "../styles/faq.scss";
 import ProgressIndicator from "../components/Progress";
+import 'react-tabs/style/react-tabs.css';
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import "../styles/common.scss";
 
 
 function MyApp({ Component, pageProps }: AppProps) {
