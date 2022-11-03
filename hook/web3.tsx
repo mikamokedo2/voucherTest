@@ -228,6 +228,7 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
           return;
         }
         web3.eth.getAccounts(function (error, accounts) {
+          console.log(accounts)
           setAddress(accounts[0]);
           web3.eth.defaultAccount = accounts[0];
         });
