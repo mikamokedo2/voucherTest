@@ -32,7 +32,7 @@ const Header = () => {
 
   return (
     <section className="seclecBox container mx-auto">
-      <WalletPopup
+      {/* <WalletPopup
         onHandleConnectWallet={() => {
           connectMetamask && connectMetamask();
           setOpened(false);
@@ -43,7 +43,7 @@ const Header = () => {
         onClose={() => setOpened(false)}
         walletSelect={walletSelect}
         opened={opened}
-      />
+      /> */}
       <div className="d-flex align-items-center justify-between ">
         <SelectLanguage />
         <div className="logo-head">
@@ -99,6 +99,7 @@ const Header = () => {
                   onClick={() => {
                     setOpened(true);
                     setNetWork && setNetWork("bsc");
+                    connectMetamask && connectMetamask("bsc");
                   }}
                 >
                   BSC chain
@@ -107,6 +108,7 @@ const Header = () => {
                   onClick={() => {
                     setOpened(true);
                     setNetWork && setNetWork("kai");
+                    connectMetamask && connectMetamask("kai");
                   }}
                 >
                   KAI chain

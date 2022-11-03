@@ -24,7 +24,7 @@ const blockExplorerUrlsBsc = "https://testnet.bscscan.com";
 interface ContextType {
   web3?: Web3;
   address: string;
-  connectMetamask?: () => void;
+  connectMetamask?: (type:"kai" | "bsc") => void;
   contract?: Contract;
   netWork: string;
   setNetWork?: Dispatch<SetStateAction<string>>;
@@ -202,8 +202,8 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     setWeb3(web3);
   };
 
-  const connectMetamask = async () => {
-    if (netWork === "kai") {
+  const connectMetamask = async (type:"kai" | "bsc") => {
+    if (type === "kai") {
       switchNetworkKai();
     } else {
       switchNetworkBsc();
