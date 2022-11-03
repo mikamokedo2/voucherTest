@@ -109,8 +109,7 @@ const Support = () => {
 
   return (
     <div className="container mx-auto Faq contact_faq">
-      <div className="flex items-center flex-col justify-center mb-[100px] md:flex-row md:items-start">
-        <div className="w-[100%] order-2 md:w-[50%] md:order-2">
+        <div className="w-[100%] order-2 md:w-[80%] md:order-2">
           <p className="text-white title-faq">{t.faq}</p>
           <Collapse
             expandIconPosition="right"
@@ -177,10 +176,9 @@ const Support = () => {
             ))}
           </Collapse>
         </div>
-        <div className="w-[50%] order-1 flex justify-center items-start max-md:w-[100%] md:order-2">
+        <div className="w-[50%] order-1 flex justify-center items-start max-md:w-[100%] md:order-2 img-faq">
           <img src="./faq.png" alt="" />
         </div>
-      </div>
     </div>
   );
 };
