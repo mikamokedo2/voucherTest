@@ -66,6 +66,11 @@
                 border: 3px solid #ACD9EE;
                 background: rgba(172, 217, 238, 0.2);
             }
+            .box-voucher-type{
+                &:not(.active) {
+                    cursor: not-allowed;
+                }
+            }
         }
     }
 }

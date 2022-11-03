@@ -19,6 +19,9 @@ import Footer from "../components/Footer";
 import Slider from "react-slick";
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 
+import Support from "../components/Faq";
+import { message } from "antd";
+
 const Home: NextPage = () => {
   const [openedPaying, setOpenedPayingPopup] = useState(false);
   const [isPaid, setIsPaid] = useState(false);
@@ -56,6 +59,9 @@ const Home: NextPage = () => {
     return <div onClick={onClick}>{children}</div>
   };
   CustomTab.tabsRole = 'Tab';
+  const warning = (text: any) => {
+    message.warning(text);
+  };
   return (
     <div className={style.root}>
       <Header />
@@ -73,22 +79,22 @@ const Home: NextPage = () => {
                   <img src="/assets/images/logo-shopdi.png" alt="" />
                 </div>
               </CustomTab>
-              <CustomTab onClick={()=> setTabIndex(1)}>
+              <CustomTab onClick={()=> warning('Comming soon')}>
                 <div className="box-voucher-type">
                   <div className="text-inside">Comming soon ...</div>
                 </div>
               </CustomTab>
-              <CustomTab onClick={()=> setTabIndex(1)}>
+              <CustomTab onClick={()=> warning('Comming soon')}>
                 <div className="box-voucher-type">
                   <div className="text-inside">Comming soon ...</div>
                 </div>
               </CustomTab>
-              <CustomTab onClick={()=> setTabIndex(1)}>
+              <CustomTab onClick={()=> warning('Comming soon')}>
                 <div className="box-voucher-type">
                   <div className="text-inside">Comming soon ...</div>
                 </div>
               </CustomTab>
-              <CustomTab onClick={()=> setTabIndex(1)}>
+              <CustomTab onClick={()=> warning('Comming soon')}>
                 <div className="box-voucher-type">
                   <div className="text-inside">Comming soon ...</div>
                 </div>
@@ -127,7 +133,7 @@ const Home: NextPage = () => {
         </div>
 
       </div>
-
+      <Support/>
       {/* ----------------------Thông báo---------------------------  */}
       {/* <Alert isPaid={isPaid} err={err} ethercanLink={ethercanLink} /> */}
       {openedPaying && <Loading />}

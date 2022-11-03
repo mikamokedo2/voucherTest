@@ -22,11 +22,15 @@ $common-transition: 0.3s ease;
 
 .Faq {
   overflow: hidden;
-
+  display: flex;
+  flex-direction: column-reverse;
   @media (max-width: 991px) {
     padding: 9rem 0;
   }
-
+  .img-faq{
+    display: block;
+    margin: 0 auto;
+  }
   &-subtitle {
     text-transform: uppercase;
     font-size: 1.8rem;
@@ -148,10 +152,10 @@ $common-transition: 0.3s ease;
   }
 }
 .contact_faq{
-  margin-top: 100px;
+  margin-bottom: 5rem;
   .title-faq{
     font-weight: 400;
-    font-size: 60px;
+    font-size: 2.5rem;
     line-height: 72px;
   }
 }
@@ -159,7 +163,7 @@ $common-transition: 0.3s ease;
   .contact_faq{
     padding: 0 3%;
     .title-faq{
-      font-size: 26px;
+      font-size: 1.8rem;
     }
     .Faq-panel-header-number{
       font-size: 20px;
