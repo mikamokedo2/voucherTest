@@ -102,13 +102,17 @@ const dataFaq = [
   },
 ];
 
-const Support = () => {
+interface SupportProps{
+  isShow:boolean;
+}
+
+const Support:React.FC<SupportProps> = ({isShow}) => {
   const router = useRouter();
   const { locale } = router;
   const t = locale === "en" ? en : vn;
 
   return (
-    <div className="container mx-auto Faq contact_faq">
+    <div className={`container mx-auto ${!isShow ? "hidden" : "contact_faq Faq"}`}>
         <div className="w-[100%] order-2 md:w-[80%] md:order-2">
           <p className="text-white title-faq">{t.faq}</p>
           <Collapse
