@@ -2,7 +2,7 @@
   background: #232732;
   position: relative;
   min-height: 100vh;
-  /* background: #374756; */
+  /* background: #232732; */
 
 }
 
@@ -19,7 +19,7 @@
   left: 0;
 }
 .color-primary{
-  color: #FDD116;
+  color: #ACD9EE;
 }
 .sectionBrand {
   margin-top: 60px;
@@ -108,7 +108,7 @@ border-radius: 2px;
 }
 
 .item-voucher-select {
-  border: 1px solid #fdd116;
+  border: 1px solid #ACD9EE;
   border-radius: 2px;
   font-style: normal;
   font-weight: 600;
@@ -117,7 +117,7 @@ border-radius: 2px;
   display: flex;
   align-items: center;
   text-align: center;
-  color: #fdd116;
+  color: #ACD9EE;
   padding: 8px 0px 10px 0px;
   justify-content: center;
   cursor: pointer;
@@ -165,7 +165,7 @@ border-radius: 2px;
   gap: 8px;
   width: 100%;
   height: 50px;
-  background: #fdd116;
+  background: #ACD9EE;
   border-radius: 2px;
   font-weight: 700;
   font-size: 16px;
@@ -182,7 +182,7 @@ border-radius: 2px;
  padding: 18px 16px;
   gap: 8px;
   width: 100%;
-  background: #fdd116;
+  background: #ACD9EE;
   border-radius: 2px;
   display: flex;
   align-items: center;
@@ -204,7 +204,7 @@ line-height: 28px;color: #000000;
   gap: 8px;
   width: 100%;
   height: 50px;
-  background: #fdd116;
+  background: #ACD9EE;
   border-radius: 2px;
   font-weight: 700;
   font-size: 16px;

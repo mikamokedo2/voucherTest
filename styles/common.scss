@@ -1,0 +1,130 @@
+body {
+    @media (max-width: 992px) {
+        margin-bottom: 150px;
+    }
+}
+
+a{
+    cursor: pointer;
+    &:hover{
+        color:#ACD9EE !important;
+    }
+    img{
+        &:hover{
+            opacity: 0.6;
+        }
+    }
+}
+.logo-head{
+    max-width: 60%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    @media (max-width: 768px) {
+        max-width: 30%;
+    }
+}
+.number-coin{
+    border: 0px solid #ACD9EE;
+    cursor: unset;
+    @media (max-width: 768px) {
+        display: none;
+    }
+}
+.seclecBox{
+    img{
+        width: 70%;
+        max-width: 200px;
+    }
+}
+.wrap-desc{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 32px;
+    .description{
+        font-weight: 400;
+        font-size: 18px;
+        line-height: 134%;
+        letter-spacing: -0.507564px;
+        color: #FFFFFF;
+    }
+    a{
+        font-weight: 400;
+        font-size: 18px;
+        line-height: 134%;
+        display: flex;
+        align-items: center;
+        letter-spacing: -0.5px;
+        text-decoration-line: underline;
+        color: #FFFFFF;
+        span{
+            display: block;
+            margin-left: 8px;
+        }
+    }
+}
+.brach{
+    position: relative;
+    min-height: 300px;
+    img{
+        width: 80%;
+    }
+    .slick-prev{
+        left: -10px;
+    }
+    .slick-next{
+        right: -10px;
+    }
+    .slick-prev, .slick-next{
+        z-index: 1;
+    }
+    .slick-list{
+        z-index: 0;
+    }
+    .react-tabs{
+        width: 100%;
+    }
+    .react-tabs__tab--selected{
+        background: none;
+        border: 0px solid #fff;
+        border-color: unset;
+        color: #fff;
+    }
+    .react-tabs__tab-list{
+        border: 0px solid #fff;
+    }
+    .react-tabs__tab-panel{
+        color: #fff;
+    }
+    .slick-slider {
+        width: 100%;
+        .slick-slide{
+            height: auto;
+            .box-voucher-type{
+                max-width: 85%;
+                margin: 0 auto;
+                height: 8rem;
+                display: flex !important;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                &:hover{
+                    opacity: 0.5;
+                }
+                @media (max-width: 768px) {
+                    height: 6rem;
+                }
+            }
+            .active{
+                border: 3px solid #ACD9EE;
+                background: rgba(172, 217, 238, 0.2);
+            }
+            .box-voucher-type{
+                &:not(.active) {
+                    cursor: not-allowed;
+                }
+            }
+        }
+    }
+}

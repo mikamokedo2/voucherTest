@@ -7,6 +7,7 @@ import vn from "../locales/vn";
 import { useWeb3 } from "../hook/web3";
 import Web3 from "web3";
 import BigNumber from "bignumber.js";
+import { DownOutlined } from '@ant-design/icons';
 
 const Header = () => {
   const router = useRouter();
@@ -20,7 +21,7 @@ const Header = () => {
     popular: true,
   });
 
-  const { connectMetamask, address, setNetWork, balance } = useWeb3();
+  const { connectMetamask, address, setNetWork, balance,logOut } = useWeb3();
   const [opened, setOpened] = useState(false);
   const isConnected = address !== "";
   const handleHover = async () => {
@@ -32,7 +33,7 @@ const Header = () => {
 
   return (
     <section className="seclecBox container mx-auto">
-      <WalletPopup
+      {/* <WalletPopup
         onHandleConnectWallet={() => {
           connectMetamask && connectMetamask();
           setOpened(false);
@@ -43,12 +44,17 @@ const Header = () => {
         onClose={() => setOpened(false)}
         walletSelect={walletSelect}
         opened={opened}
-      />
+      /> */}
       <div className="d-flex align-items-center justify-between ">
         <SelectLanguage />
+        <div className="logo-head">
+          <a href="/">
+          <img src="assets/images/logo-header.png"/>
+          </a>
+        </div>
         {isConnected ? (
           <div className="flex">
-            <div className="seclecBox_item mr-[10px]">
+            <div className="seclecBox_item mr-[10px] number-coin">
               {new BigNumber(
                 new BigNumber(balance ?? 0)
                   .dividedBy(new BigNumber(10).pow(18))
@@ -70,13 +76,15 @@ const Header = () => {
                   address.length - 4,
                   address.length
                 )}`}</span>
+                <DownOutlined />
               </div>
               <div className={` sub_menu ${isActive ? "active" : ""}`}>
                 <ul>
                   <li onClick={() => router.push("/support")}>
                     {t.contactHelp}
                   </li>
-                  <li onClick={() => router.push("/faq")}>FAQs</li>
+                  <li onClick={() => router.push("/faq")} className="mt-[10px]">FAQs</li>
+                  <li onClick={logOut}>Log out</li>
                 </ul>
               </div>
             </div>
@@ -96,6 +104,7 @@ const Header = () => {
                   onClick={() => {
                     setOpened(true);
                     setNetWork && setNetWork("bsc");
+                    connectMetamask && connectMetamask("bsc");
                   }}
                 >
                   BSC chain
@@ -104,6 +113,7 @@ const Header = () => {
                   onClick={() => {
                     setOpened(true);
                     setNetWork && setNetWork("kai");
+                    connectMetamask && connectMetamask("kai");
                   }}
                 >
                   KAI chain

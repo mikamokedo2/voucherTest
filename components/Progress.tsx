@@ -3,7 +3,7 @@ import { Router } from 'next/router';
 import TopBarProgress from 'react-topbar-progress-indicator';
 
 TopBarProgress.config({
-  barColors: ['#FDD116'],
+  barColors: ['#ACD9EE'],
   shadowBlur: 5,
   barThickness: 2,
 });

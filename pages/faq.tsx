@@ -1,12 +1,14 @@
 import React from 'react';
 import Header from '../components/Header';
-import Faq from '../components/Faq';
+import Footer from '../components/Footer';
+import Support from '../components/Faq';
 
 const support = () => {
   return (
     <div>
        <Header/>
-       <Faq />
+       <Support isShow={true}/>
+       <Footer />
     </div>
  
   )

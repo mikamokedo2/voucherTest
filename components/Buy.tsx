@@ -121,9 +121,9 @@ const Buy: React.FC<BuyProps> = ({
   });
 
   return (
-    <main className={`p-[16px] ${!isShow ? "hidden" : "mainContent"}`}>
+    <main className={`p-[16px] container ${!isShow ? "hidden" : "mainContent"}`}>
       <div className="main_top flex">
-        <img src="/assets/images/money.png" alt="" />
+        <img src="/assets/images/logo-header.png" alt="" />
       </div>
       <section className="main__mid">
         <section className={style["section-buyer"]}>
@@ -144,7 +144,7 @@ const Buy: React.FC<BuyProps> = ({
               {valueVoucher} {t.coin}
             </p>
           </div>
-          <div className={style["title-price"]}>Payment Wallet</div>
+          <div className={style["title-price"]}>{t.payment}</div>
           <h1 className={style["token-id"]}>
             {address === ""
               ? 0
@@ -168,7 +168,7 @@ const Buy: React.FC<BuyProps> = ({
             ></input>
           </div>
           <div className="buyer__item">
-            <div className={style["buyer-name-val"]}>Email :</div>
+            <div className={style["buyer-name-val"]}>{t.formEmail} :</div>
             <input
               className={`${style["contact-input"]} ${
                 formik.touched.email &&
@@ -177,7 +177,7 @@ const Buy: React.FC<BuyProps> = ({
               }`}
               type="text"
               value={formik.values.email}
-              placeholder="Email"
+              placeholder={t.formEmail}
               onChange={formik.handleChange}
               name="email"
             ></input>
