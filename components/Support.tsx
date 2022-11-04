@@ -62,10 +62,10 @@ const Support = () => {
       />
     </div>
     <div className="contact__item">
-      <div className="">Email :</div>
+      <div className="">{t.formEmail} :</div>
       <input
         type="text"
-        placeholder="Email"
+        placeholder={t.formEmail}
         className={`${style["contact-input"]} ${formik.touched.email && Boolean(formik.errors.email) && "border border-red-500 border-solid"}`}
         name="email"
         onChange={formik.handleChange}

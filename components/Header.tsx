@@ -7,6 +7,7 @@ import vn from "../locales/vn";
 import { useWeb3 } from "../hook/web3";
 import Web3 from "web3";
 import BigNumber from "bignumber.js";
+import { DownOutlined } from '@ant-design/icons';
 
 const Header = () => {
   const router = useRouter();
@@ -53,7 +54,7 @@ const Header = () => {
         </div>
         {isConnected ? (
           <div className="flex">
-            <div className="seclecBox_item mr-[10px]">
+            <div className="seclecBox_item mr-[10px] number-coin">
               {new BigNumber(
                 new BigNumber(balance ?? 0)
                   .dividedBy(new BigNumber(10).pow(18))
@@ -75,6 +76,7 @@ const Header = () => {
                   address.length - 4,
                   address.length
                 )}`}</span>
+                <DownOutlined />
               </div>
               <div className={` sub_menu ${isActive ? "active" : ""}`}>
                 <ul>

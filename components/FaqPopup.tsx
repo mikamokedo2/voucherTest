@@ -25,19 +25,8 @@ const FaqPopup: React.FC<FaqPopupProps> = ({ onClose }) => {
           src="/assets/images/multiply.png"
         />
         <div className={`rounded-[4px] `}>
-          <div className="text-lg mb-[20px] font-semibold">Điều kiện điều khoản sử dụng Voucher</div>
-           1. Vouchers được sử dụng để mua
-          hàng tại Shopdi, bao gồm cả các sản phẩm trong chương trình khuyến
-          mãi.<br/> 2. Khách Hàng sẽ sử dụng Voucher và quy đổi thành Shopdi xu để
-          mua sắm và thực hiện thanh toán trực tuyến trên Shopdi. <br/>3. Mỗi Mã
-          Voucher chỉ được chuyển đổi sang Shopdi xu 01 lần. Không chấp nhận
-          voucher đã quá thời gian quy đổi. <br/>4. Voucher sẽ không được hoàn lại
-          khi đã quy đổi Shopdi Xu <br/>5. Voucher không có giá trị quy đổi thành
-          tiền mặt. <br/>6. Khách hàng có trách nhiệm bảo mật thông tin voucher sau
-          khi mua. Shopdi sẽ không chịu trách nhiệm trả lại Voucher bị mất hoặc
-          ở trạng thái "Đã sử dụng" sau thời điểm Voucher được quy đổi vì bất kỳ
-          lý do gì.<br/> 7. Shopdi có quyền sửa đổi hoặc thay đổi các điều khoản và
-          điều kiện mà không cần thông báo trước.
+          <div className="text-lg mb-[20px] font-semibold">{t.termVoucher}</div>
+           {t.descTermVoucher}
         </div>
       </div>
    
