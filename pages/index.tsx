@@ -18,6 +18,7 @@ import { useWeb3 } from "../hook/web3";
 import Footer from "../components/Footer";
 import Slider from "react-slick";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
+import { RightOutlined } from '@ant-design/icons';
 
 import Support from "../components/Faq";
 import { message } from "antd";
@@ -72,6 +73,10 @@ const Home: NextPage = () => {
         }`}
       >
         <h1 className="title_name">{t.buyVoucher}</h1>
+        <div className="wrap-desc">
+          <div className="description">{t.description}</div>
+          <a href="" onClick={() => warning(t.comming)}>{t.all} <RightOutlined /></a>
+        </div>
         <div className="flex gap-x-[10px] brach">
           <Tabs
             selectedIndex={tabIndex}
@@ -84,22 +89,22 @@ const Home: NextPage = () => {
                     <img src="/assets/images/logo-shopdi.png" alt="" />
                   </div>
                 </CustomTab>
-                <CustomTab onClick={() => warning("Comming soon")}>
+                <CustomTab onClick={() => warning(t.comming)}>
                   <div className="box-voucher-type">
                     <div className="text-inside">Comming soon ...</div>
                   </div>
                 </CustomTab>
-                <CustomTab onClick={() => warning("Comming soon")}>
+                <CustomTab onClick={() => warning(t.comming)}>
                   <div className="box-voucher-type">
                     <div className="text-inside">Comming soon ...</div>
                   </div>
                 </CustomTab>
-                <CustomTab onClick={() => warning("Comming soon")}>
+                <CustomTab onClick={() => warning(t.comming)}>
                   <div className="box-voucher-type">
                     <div className="text-inside">Comming soon ...</div>
                   </div>
                 </CustomTab>
-                <CustomTab onClick={() => warning("Comming soon")}>
+                <CustomTab onClick={() => warning(t.comming)}>
                   <div className="box-voucher-type">
                     <div className="text-inside">Comming soon ...</div>
                   </div>
@@ -108,9 +113,7 @@ const Home: NextPage = () => {
             </TabList>
             <TabPanel>
               <div className="home-description">
-                Bạn có thể mua voucher để quy đổi Shopdi Xu và bắt đầu trải
-                nghiệm các tính năng nổi bật tại Shopdi. Voucher sẽ được tự động
-                lưu lại tại Ví Shopdi trong tài khoản của bạn.
+                {t.shopdiDescription}
               </div>
               <div
                 className="seclecBox_item mt-[30px] w-[150px] mb-[100px] text-center"

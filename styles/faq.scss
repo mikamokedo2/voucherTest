@@ -140,6 +140,9 @@ $common-transition: 0.3s ease;
     &-content {
       font-size: 1, 8rem;
       color: $white;
+      div{
+        white-space: break-spaces;
+      }
     }
   }
   .ant-collapse-expand-icon{
@@ -159,9 +162,10 @@ $common-transition: 0.3s ease;
     line-height: 72px;
   }
 }
-@media screen and (max-width:1100px) {
+@media screen and (max-width:1200px) {
   .contact_faq{
     padding: 0 3%;
+    flex-direction: column;
     .title-faq{
       font-size: 1.8rem;
     }

@@ -51,7 +51,7 @@
 }
 
 .sub_menu {
-
+    background: #232732;
     position: absolute;
     top: 100%;
     right: 0px;
@@ -129,6 +129,8 @@
     border-radius: 4px;
     color: #ACD9EE;
     cursor: pointer;
+    display: flex;
+    align-items: center;
 }
 
 .seclecBox_item span {
@@ -176,6 +178,7 @@
 
 .mainContent {
     display: block;
+    margin: 0 auto;
 }
 
 .mainContent.noactive {
@@ -267,7 +270,9 @@
 .popupBuy.popupBuy-white{
     background-color: #fff;
 }
-
+.popupBuy.popupBuy-white div{
+    white-space: break-spaces;
+}
 .contact__suport {
     max-width: 700px;
     margin: 0 auto;
@@ -348,8 +353,6 @@
     .mainContent {
         display: flex;
         justify-content: space-between;
-        max-width: 1320px;
-        margin: 0 auto;
     }
 
     .mainContent.noactive {
@@ -365,7 +368,8 @@
     }
 
     .main_top img {
-        max-width: 300px;
+        max-width: 400px;
+        width: 100%;
     }
 
     .wallet__item img {
@@ -377,11 +381,9 @@
 @media screen and (max-width:991px) {
     .mainContent {
         padding-bottom: 180px;
-        margin: 0;
     }
 
     .main_top img {
-        height: 20vh;
         max-width: 80%;
     }
 

@@ -1,8 +1,35 @@
+body {
+    @media (max-width: 992px) {
+        margin-bottom: 150px;
+    }
+}
+
+a{
+    cursor: pointer;
+    &:hover{
+        color:#ACD9EE !important;
+    }
+    img{
+        &:hover{
+            opacity: 0.6;
+        }
+    }
+}
 .logo-head{
     max-width: 60%;
     display: flex;
     align-items: center;
     justify-content: center;
+    @media (max-width: 768px) {
+        max-width: 30%;
+    }
+}
+.number-coin{
+    border: 0px solid #ACD9EE;
+    cursor: unset;
+    @media (max-width: 768px) {
+        display: none;
+    }
 }
 .seclecBox{
     img{
@@ -10,9 +37,36 @@
         max-width: 200px;
     }
 }
+.wrap-desc{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 32px;
+    .description{
+        font-weight: 400;
+        font-size: 18px;
+        line-height: 134%;
+        letter-spacing: -0.507564px;
+        color: #FFFFFF;
+    }
+    a{
+        font-weight: 400;
+        font-size: 18px;
+        line-height: 134%;
+        display: flex;
+        align-items: center;
+        letter-spacing: -0.5px;
+        text-decoration-line: underline;
+        color: #FFFFFF;
+        span{
+            display: block;
+            margin-left: 8px;
+        }
+    }
+}
 .brach{
     position: relative;
-    min-height: 500px;
+    min-height: 300px;
     img{
         width: 80%;
     }

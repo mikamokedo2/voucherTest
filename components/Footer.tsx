@@ -1,7 +1,13 @@
 import Link from "next/link";
+import { useRouter } from "next/router";
 import React from "react";
+import en from "../locales/en";
+import vn from "../locales/vn";
 
 const Footer = () => {
+  const router = useRouter();
+  const { locale } = router;
+  const t = locale === "en" ? en : vn;
   return (
     <div className="container mx-auto text-[white] block p-[16px]">
       <div className="gap-[30px] flex justify-between pb-[32px] border-b flex-col border-gray-100 border-solid lg:flex-row lg:gap-[0px]">
@@ -9,7 +15,7 @@ const Footer = () => {
           <img src="/assets/images/logo-footer.png" />
         </div>
         <div className="w-[250px]">
-          <div className="uppercase text-sm mb-[16px] font-bold">Ngôn ngữ</div>
+          <div className="uppercase text-sm mb-[16px] font-bold">{t.language}</div>
           <div className="flex text-sm items-center mb-[12px]">
             <img src="/assets/images/vietnam.png" className="mr-[10px]" />
             Tiếng Việt
@@ -21,32 +27,32 @@ const Footer = () => {
         </div>
         <div className="w-[250px]">
           <div className="uppercase text-sm mb-[16px] font-bold">
-            Hỗ trợ khách hàng
+            {t.supportCustomer}
           </div>
           <div className="flex text-sm items-center mb-[12px]">
             <Link href="/support">
-              <a>Liên hệ với chúng tôi</a>
+              <a>{t.contact}</a>
             </Link>
           </div>
           <div className="flex text-sm items-center">
             <Link href="/faq">
-              <a>Các câu hỏi thường gặp</a>
+              <a>{t.faq}</a>
             </Link>
           </div>
         </div>
 
         <div className="w-[250px]">
           <div className="uppercase text-sm mb-[16px] font-bold">
-            KẾT NỐI VỚI CHÚNG TÔI
+            {t.connectUs}
           </div>
           <div className="flex gap-[12px]">
             <div className="footer-socials-item">
               <a
                 className="hover-opacity"
-                href="https://www.facebook.com/shopdi.official"
+                href=""
               >
                 <img
-                  src="assets/images/facebook.png"
+                  src="/assets/images/facebook.png"
                   alt="facebook"
                   style={{ maxWidth: "32px" }}
                 />
@@ -55,10 +61,10 @@ const Footer = () => {
             <div className="footer-socials-item">
               <a
                 className="hover-opacity"
-                href="https://www.youtube.com/channel/UCUEJ-fUE4-ONf-LVdizZSTg"
+                href=""
               >
                 <img
-                  src="assets/images/youtube.png"
+                  src="/assets/images/youtube.png"
                   alt="youtube"
                   style={{ maxWidth: "32px" }}
                 />
@@ -66,9 +72,9 @@ const Footer = () => {
             </div>
 
             <div className="footer-socials-item">
-              <a className="hover-opacity" href="https://t.me/ShopdiOfficial">
+              <a className="hover-opacity" href="">
                 <img
-                  src="assets/images/tele.png"
+                  src="/assets/images/tele.png"
                   alt="telegram"
                   style={{ maxWidth: "32px" }}
                 />
@@ -77,10 +83,10 @@ const Footer = () => {
             <div className="footer-socials-item">
               <a
                 className="hover-opacity"
-                href="https://twitter.com/shopdi_official"
+                href=""
               >
                 <img
-                  src="assets/images/twitter.png"
+                  src="/assets/images/twitter.png"
                   alt="twitter"
                   style={{ maxWidth: "32px" }}
                 />
@@ -89,7 +95,7 @@ const Footer = () => {
             <div className="footer-socials-item">
               <a href="" className="hover-opacity">
                 <img
-                  src="assets/images/zalo.png"
+                  src="/assets/images/zalo.png"
                   alt="zalo"
                   style={{ maxWidth: "32px" }}
                 />
@@ -98,7 +104,7 @@ const Footer = () => {
             <div className="footer-socials-item">
               <a href="" className="hover-opacity">
                 <img
-                  src="assets/images/medium.png"
+                  src="/assets/images/medium.png"
                   alt="zalo"
                   style={{ maxWidth: "32px" }}
                 />
@@ -108,8 +114,8 @@ const Footer = () => {
         </div>
       </div>
       <div className="flex justify-end mt-[16px] pb-[20px]">
-        <div className="text-sm mr-[24px]">Các điều khoản và điều kiện</div>
-        <div className="text-sm">Chính sách bảo mật</div>
+        <a className="text-sm mr-[24px]">{t.term}</a>
+        <a className="text-sm">{t.security}</a>
       </div>
     </div>
   );
