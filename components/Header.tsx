@@ -21,7 +21,7 @@ const Header = () => {
     popular: true,
   });
 
-  const { connectMetamask, address, setNetWork, balance } = useWeb3();
+  const { connectMetamask, address, setNetWork, balance,logOut } = useWeb3();
   const [opened, setOpened] = useState(false);
   const isConnected = address !== "";
   const handleHover = async () => {
@@ -48,7 +48,9 @@ const Header = () => {
       <div className="d-flex align-items-center justify-between ">
         <SelectLanguage />
         <div className="logo-head">
-          <img src="/assets/images/logo-header.png"/>
+          <a href="/">
+          <img src="assets/images/logo-header.png"/>
+          </a>
         </div>
         {isConnected ? (
           <div className="flex">
@@ -81,7 +83,8 @@ const Header = () => {
                   <li onClick={() => router.push("/support")}>
                     {t.contactHelp}
                   </li>
-                  <li onClick={() => router.push("/faq")}>FAQs</li>
+                  <li onClick={() => router.push("/faq")} className="mt-[10px]">FAQs</li>
+                  <li onClick={logOut}>Log out</li>
                 </ul>
               </div>
             </div>
