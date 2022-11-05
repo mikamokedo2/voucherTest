@@ -29,9 +29,8 @@ const Home: NextPage = () => {
   const [dataQRCode, setDataQRCode] = useState("");
   const [faq, setFaq] = useState(false);
   const [err, setErr] = useState(false);
-  const [isBuyPage, setIsBuyPage] = useState(false);
   const [tabIndex, setTabIndex] = useState(0);
-  const { address } = useWeb3();
+  const { address,setIsDisconnect,isDisconnect } = useWeb3();
   const router = useRouter();
   const { locale } = router;
   const t = locale === "en" ? en : vn;
@@ -69,7 +68,7 @@ const Home: NextPage = () => {
       <Header />
       <div
         className={`container mx-auto p-[16px] ${
-          isBuyPage ? "hidden" : "block"
+          isDisconnect ? "hidden" : "block"
         }`}
       >
         <h1 className="title_name">{t.buyVoucher}</h1>
@@ -91,7 +90,7 @@ const Home: NextPage = () => {
                     if (address === "") {
                       message.warning("Kết nối ví để tiếp tục!");
                     } else {
-                      setIsBuyPage(true);
+                      setIsDisconnect && setIsDisconnect(true);
                     }
                   }}
                 >
@@ -129,7 +128,7 @@ const Home: NextPage = () => {
                   if (address === "") {
                     message.warning("Kết nối ví để tiếp tục!");
                   } else {
-                    setIsBuyPage(true);
+                    setIsDisconnect && setIsDisconnect(true);
                   }
                 }}
               >
@@ -157,9 +156,9 @@ const Home: NextPage = () => {
         setErr={(state) => setErr(state)}
         setIsPaid={(state) => setIsPaid(state)}
         setDataQRCode={(state) => setDataQRCode(state)}
-        isShow={isBuyPage}
+        isShow={isDisconnect}
       />
-      <Support isShow={!isBuyPage} />
+      <Support isShow={!isDisconnect} />
       {/* ----------------------Thông báo---------------------------  */}
       {/* <Alert isPaid={isPaid} err={err} ethercanLink={ethercanLink} /> */}
       {openedPaying && <Loading />}

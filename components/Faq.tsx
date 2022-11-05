@@ -85,11 +85,11 @@ const Support:React.FC<SupportProps> = ({isShow}) => {
       title: t.dataFaqTitle11,
       content: t.dataFaqContent11,
     },
-    {
-      number: "12",
-      title: t.dataFaqTitle12,
-      content: t.dataFaqContent12,
-    },
+    // {
+    //   number: "12",
+    //   title: t.dataFaqTitle12,
+    //   content: t.dataFaqContent12,
+    // },
   ];
   return (
     <div className={`container mx-auto ${!isShow ? "hidden" : "contact_faq Faq"}`}>

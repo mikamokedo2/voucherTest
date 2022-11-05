@@ -8,7 +8,9 @@
     background: #ACD9EE;
     border-radius: 2px;
 }
-
+a.btn__main:hover{
+    color:#000!important
+}
 .hr {
     display: block;
     width: 100%;
@@ -326,6 +328,16 @@
     display: flex;
     align-items: center;
 }
+.ant-dropdown-trigger{
+    width: 115px;
+    border: 2px solid #ACD9EE;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ACD9EE;
+}
+
 
 @keyframes ani1 {
     from {
@@ -448,5 +460,13 @@
     .box-voucher-type .text-inside{
     font-size: 0.8rem;
     }
-
+    .ant-dropdown-trigger{
+        width: 80px;
+    }
+    .seclecBox .logo-head img{
+       
+            width: 100%;
+         
+        
+    }
 }

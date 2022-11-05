@@ -30,10 +30,9 @@ const Loading = () => {
       </p>
 
       <p
-        className="px-[37px] text-white text-[14px] font-normal text-center mt-[40px] flex"
-      >
-        {t.noteProgress}
-      </p>
+        className="px-[37px] text-white text-[14px] font-normal text-center mt-[0px] flex" dangerouslySetInnerHTML={{__html:t.noteProgress}}
+      />
+ 
 
     </div>
   </div>

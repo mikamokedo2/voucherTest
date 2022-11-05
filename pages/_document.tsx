@@ -32,31 +32,31 @@ class WebAppDocument extends Document {
             rel="icon"
             type="image/png"
             sizes="16x16"
-            href="/icons/favicon-16x16.png"
+            href="/assets/logo-footer.png"
           />
           <link
             rel="icon"
             type="image/png"
             sizes="32x32"
-            href="/icons/favicon-32x32.png"
+            href="/assets/logo-footer.png"
           />
           <link
             rel="icon"
             type="image/png"
             sizes="48x48"
-            href="/icons/favicon-48x48.png"
+            href="/assets/logo-footer.png"
           />
           <link
             rel="icon"
             type="image/png"
             sizes="128x128"
-            href="/icons/favicon-128x128.png"
+            href="/assets/logo-footer28.png"
           />
           <link
             rel="icon"
             type="image/png"
             sizes="196x196"
-            href="/icons/favicon-196x196.png"
+            href="/assets/logo-footer96.png"
           />
           <link rel="preconnect" href="https://fonts.googleapis.com" />
           <link rel="preconnect" href="https://fonts.gstatic.com" />

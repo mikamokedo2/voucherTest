@@ -3,6 +3,7 @@ import QRCode from "react-qr-code";
 import { useRouter } from "next/router";
 import en from "../locales/en";
 import vn from "../locales/vn";
+import { message } from "antd";
 
 interface SuccessProps {
   dataQRCode: string;
@@ -19,6 +20,7 @@ const Success: React.FC<SuccessProps> = ({ dataQRCode, onClosed }) => {
     if (textAreaRef.current) {
       const text = textAreaRef.current.innerText;
       navigator.clipboard.writeText(text);
+      message.info(t.copied)
     }
   };
 
@@ -33,7 +35,7 @@ const Success: React.FC<SuccessProps> = ({ dataQRCode, onClosed }) => {
           </h3>
           <h1 className="text-white text-[28px] font-medium text-center flex flex-row items-center gap-3 justify-center mb-[10px]">
             <span
-              style={{ display: "flex", alignItems: "center" }}
+              style={{ display: "flex", alignItems: "center",color:"#FDD116" }}
               ref={textAreaRef}
             >
               {dataQRCode}
@@ -47,7 +49,7 @@ const Success: React.FC<SuccessProps> = ({ dataQRCode, onClosed }) => {
             <a
               href="shopdi://shopdi.io"
               target={"_blank"}
-              className="flex py-[14px] flex-row items-center justify-center rounded-[2px] border-solid border-[1px] border-black text-black cursor-pointer font-bold text-[16px]  btn__main"
+              className="rounded flex py-[14px] flex-row items-center justify-center text-black cursor-pointer font-bold text-[16px] btn__main"
             >
               {t.usedApp}
             </a>

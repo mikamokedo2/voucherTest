@@ -41,7 +41,7 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="w-[250px]">
+        {/* <div className="w-[250px]">
           <div className="uppercase text-sm mb-[16px] font-bold">
             {t.connectUs}
           </div>
@@ -111,7 +111,7 @@ const Footer = () => {
               </a>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
       <div className="flex justify-end mt-[16px] pb-[20px]">
         <a className="text-sm mr-[24px]">{t.term}</a>

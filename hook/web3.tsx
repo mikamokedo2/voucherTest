@@ -37,6 +37,8 @@ interface ContextType {
   fetchBalance?: () => void;
   getAdminWallet?: () => Promise<any>;
   logOut?:() => void;
+  isDisconnect:boolean;
+  setIsDisconnect?:Dispatch<SetStateAction<boolean>>;
 }
 const initialState: ContextType = {
   web3: undefined,
@@ -46,6 +48,8 @@ const initialState: ContextType = {
   adminWallet: "",
   rateConvert: 1,
   balance: 0,
+  isDisconnect:false,
+  
 };
 
 export const AuthContext = createContext(initialState);
@@ -67,6 +71,8 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [contractWallet, setContractWallet] = useState("");
   const [rateConvert, setRateConvert] = useState(1);
   const [balance, setBalance] = useState(0);
+  const [isDisconnect, setIsDisconnect] = useState(false);
+  
 
   const getAdminWallet = useCallback(async () => {
     if (netWork === "") {
@@ -263,7 +269,8 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     setWeb3(undefined);
     setAddress("");
     setNetWork("");
-    localStorage.removeItem("voucher-chain")
+    localStorage.removeItem("voucher-chain");
+    setIsDisconnect(false);
   }
 
   return (
@@ -280,7 +287,9 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         rateConvert,
         fetchBalance,
         getAdminWallet,
-        logOut
+        logOut,
+        isDisconnect,
+        setIsDisconnect
       }}
     >
       {children}

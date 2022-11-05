@@ -84,7 +84,7 @@ const Header = () => {
                     {t.contactHelp}
                   </li>
                   <li onClick={() => router.push("/faq")} className="mt-[10px]">FAQs</li>
-                  <li onClick={logOut}>Log out</li>
+                  <li onClick={logOut}>{t.disconnect}</li>
                 </ul>
               </div>
             </div>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState,useMemo } from "react";
 import * as yup from "yup";
 import { useFormik } from "formik";
 import { useRouter } from "next/router";
@@ -7,16 +7,12 @@ import vn from "../locales/vn";
 import { useWeb3 } from "../hook/web3";
 import style from "../styles/home.module.css";
 import axios from "axios";
-import { BigNumber } from "ethers";
+import { BigNumber } from "bignumber.js";
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 import { serverURL } from "../constants/const";
 import { message } from "antd";
 
-export const validationPhoneSchema = yup.object({
-  phone: yup.string().phone("VN"),
-  email: yup.string().required().email("Invalid email format"),
-  agree: yup.boolean().oneOf([true], "Bạn phải đồng ý với điều khoản sử dụng"),
-});
+
 
 const decimals = 18;
 
@@ -47,7 +43,14 @@ const Buy: React.FC<BuyProps> = ({
   const [valueVoucher, setValueVoucher] = useState(1000);
   const { locale } = router;
   const t = locale === "en" ? en : vn;
-  const { address, contract, netWork, adminWallet, rateConvert,getAdminWallet } = useWeb3();
+  const {
+    address,
+    contract,
+    netWork,
+    adminWallet,
+    rateConvert,
+    getAdminWallet,
+  } = useWeb3();
   const increment = async () => {
     let num = count + 1;
     setCount(num);
@@ -61,6 +64,15 @@ const Buy: React.FC<BuyProps> = ({
     }
   };
 
+  const validationPhoneSchema = useMemo(() =>{
+   return yup.object({
+      phone: yup.string().phone("VN").required(t.forgotPhone),
+      email: yup.string().required(t.email).email(t.email),
+      agree: yup.boolean().oneOf([true], t.agreeDescription),
+    })
+  },[locale]);
+
+
   const formik = useFormik({
     initialValues: {
       phone: "",
@@ -73,7 +85,7 @@ const Buy: React.FC<BuyProps> = ({
         return;
       }
       try {
-        getAdminWallet && await getAdminWallet();
+        getAdminWallet && (await getAdminWallet());
         setOpenedPayingPopup(true);
         const result = await contract.methods
           .approve(
@@ -97,7 +109,7 @@ const Buy: React.FC<BuyProps> = ({
             ).toString(),
             value: valueVoucher,
             phone: value.phone,
-            email:value.email,
+            email: value.email,
             txt: result.transactionHash,
             captcha,
             netWork,
@@ -121,7 +133,9 @@ const Buy: React.FC<BuyProps> = ({
   });
 
   return (
-    <main className={`p-[16px] container ${!isShow ? "hidden" : "mainContent"}`}>
+    <main
+      className={`p-[16px] container ${!isShow ? "hidden" : "mainContent"}`}
+    >
       <div className="main_top flex">
         <img src="/assets/images/logo-header.png" alt="" />
       </div>
@@ -148,17 +162,25 @@ const Buy: React.FC<BuyProps> = ({
           <h1 className={style["token-id"]}>
             {address === ""
               ? 0
-              : convertVoucherToShod(valueVoucher, rateConvert)}{" "}
+              :
+              new BigNumber(
+                new BigNumber(
+                  convertVoucherToShod(valueVoucher, rateConvert)
+                ).toFixed(4, 1)
+              ).toString().replace(".",",")
+              
+              
+              }&nbsp;
             SHOD
           </h1>
           <div className="hr"></div>
           <div className="buyer__item">
-            <div className={style["buyer-name-val"]}>{t.phoneNumber} :</div>
+            <div className={style["buyer-name-val"]}>{t.phoneNumber}<span style={{color:'red'}}>*</span> :</div>
             <input
               className={`${style["contact-input"]} ${
                 formik.touched.phone &&
                 Boolean(formik.errors.phone) &&
-                "border border-red-500 border-solid"
+                "border border-red-500 border-2"
               }`}
               type="text"
               value={formik.values.phone}
@@ -166,22 +188,29 @@ const Buy: React.FC<BuyProps> = ({
               placeholder={t.phoneNumber}
               onChange={formik.handleChange}
             ></input>
+                        {formik.touched.phone && Boolean(formik.errors.phone) && (
+              <div className="text-red mt-2">{t.forgotPhone}</div>
+            )}
           </div>
           <div className="buyer__item">
-            <div className={style["buyer-name-val"]}>{t.formEmail} :</div>
+            <div className={style["buyer-name-val"]}>{t.formEmail}<span style={{color:'red'}}>*</span> :</div>
             <input
               className={`${style["contact-input"]} ${
                 formik.touched.email &&
                 Boolean(formik.errors.email) &&
-                "border border-red-500 border-solid"
+                "border border-red-500 border-2"
               }`}
-              type="text"
+              type="email"
               value={formik.values.email}
               placeholder={t.formEmail}
               onChange={formik.handleChange}
               name="email"
             ></input>
+                        {formik.touched.email && Boolean(formik.errors.email) && (
+              <div className="text-red mt-2">{formik.errors.email}</div>
+            )}
           </div>
+
           <div className="wrap-fix">
             <span className={style["title-you"]}>
               <input
