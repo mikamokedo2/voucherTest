@@ -11,7 +11,7 @@ const Footer = () => {
   return (
     <div className="container mx-auto text-[white] block p-[16px]">
       <div className="gap-[30px] flex justify-between pb-[32px] border-b flex-col border-gray-100 border-solid lg:flex-row lg:gap-[0px]">
-        <div className="w-[250px]">
+        <div className="w-[250px] self-center lg:self-start">
           <img src="/assets/images/logo-footer.png" />
         </div>
         <div className="w-[250px]">
@@ -114,8 +114,8 @@ const Footer = () => {
         </div> */}
       </div>
       <div className="flex justify-end mt-[16px] pb-[20px]">
-        <a className="text-sm mr-[24px]">{t.term}</a>
-        <a className="text-sm">{t.security}</a>
+        <Link href="/privacy-policy"><a className="text-sm mr-[24px]">{t.term}</a></Link>
+        <Link href="/term-condition"><a className="text-sm">{t.security}</a></Link>
       </div>
     </div>
   );

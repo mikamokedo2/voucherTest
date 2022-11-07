@@ -21,6 +21,7 @@ const Support = () => {
   const router = useRouter();
   const { locale } = router;
   const t = locale === "en" ? en : vn;
+  const [showSuccess,setShowSuccess] = useState(false);
   const [isLoading,setIsLoading] = useState(false);
   const formik = useFormik({
     initialValues: {
@@ -35,7 +36,8 @@ const Support = () => {
       setIsLoading(true);
       const { data } = await axios.post(`${serverURL}/contact`,{...value});
       if (data.success) {
-        toast.success(t.sendRequest)
+        // toast.success(t.sendRequest)
+        setShowSuccess(true);
       }else{
         toast.error(data.message)
       }
@@ -49,51 +51,65 @@ const Support = () => {
 
   return (
     <div className="contact__suport block">
-    <img src="./mail.png" alt="" /> 
-    <p className="text-white">{t.support}</p>
-    <div className="contact__item">
-      <div className="">{t.phoneNumber}:</div>
-      <input
-        type="text"
-        placeholder={t.phoneNumber}
-        className={`${style["contact-input"]} ${formik.touched.phone && Boolean(formik.errors.phone) && "border border-red-500 border-solid"}`}
-        name="phone"
-        onChange={formik.handleChange}
-      />
-    </div>
-    <div className="contact__item">
-      <div className="">{t.formEmail} :</div>
-      <input
-        type="text"
-        placeholder={t.formEmail}
-        className={`${style["contact-input"]} ${formik.touched.email && Boolean(formik.errors.email) && "border border-red-500 border-solid"}`}
-        name="email"
-        onChange={formik.handleChange}
-        
-      />
-    </div>
-    <div className="contact__item">
-      <div className="">{t.addressWallet} :</div>
-      <input
-        type="text"
-        placeholder={t.addressWallet}
-        className={`${style["contact-input"]} ${formik.touched.address && Boolean(formik.errors.address) && "border border-red-500 border-solid"}`}
-        name="address"
-        onChange={formik.handleChange}
-        
-      />
-    </div>
-    <div className="contact__item">
-      <div className="">{t.descriptionSupport} :</div>
-      <textarea
-        placeholder={t.descriptionSupport}
-        rows={5}
-        className={`${style["contact-input"]} ${formik.touched.description && Boolean(formik.errors.description) && "border border-red-500 border-solid"}`}
-        name="description"
-        onChange={formik.handleChange}
-      />
-    </div>
-    <button className="btn__main w-[100%] mb-[100px] font-bold" onClick={() => formik.handleSubmit()} disabled={isLoading}>{t.send}</button>
+      {!showSuccess ? 
+            <div>
+            <img src="/assets/images/mail.png" alt="" /> 
+            <p className="text-white">{t.support}</p>
+            <div className="contact__item">
+              <div className="">{t.phoneNumber}:</div>
+              <input
+                type="text"
+                placeholder={t.phoneNumber}
+                className={`${style["contact-input"]} ${formik.touched.phone && Boolean(formik.errors.phone) && "border border-red-500 border-solid"}`}
+                name="phone"
+                onChange={formik.handleChange}
+              />
+            </div>
+            <div className="contact__item">
+              <div className="">{t.formEmail} :</div>
+              <input
+                type="text"
+                placeholder={t.formEmail}
+                className={`${style["contact-input"]} ${formik.touched.email && Boolean(formik.errors.email) && "border border-red-500 border-solid"}`}
+                name="email"
+                onChange={formik.handleChange}
+                
+              />
+            </div>
+            <div className="contact__item">
+              <div className="">{t.addressWallet} :</div>
+              <input
+                type="text"
+                placeholder={t.addressWallet}
+                className={`${style["contact-input"]} ${formik.touched.address && Boolean(formik.errors.address) && "border border-red-500 border-solid"}`}
+                name="address"
+                onChange={formik.handleChange}
+                
+              />
+            </div>
+            <div className="contact__item">
+              <div className="">{t.descriptionSupport} :</div>
+              <textarea
+                placeholder={t.descriptionSupport}
+                rows={5}
+                className={`${style["contact-input"]} ${formik.touched.description && Boolean(formik.errors.description) && "border border-red-500 border-solid"}`}
+                name="description"
+                onChange={formik.handleChange}
+              />
+            </div>
+            <button className="btn__main w-[100%] mb-[100px] font-bold" onClick={() => formik.handleSubmit()} disabled={isLoading}>{t.send}</button>
+            </div>
+            :
+            <div className='send_success'>
+              <img src='/assets/images/success.png'/>
+                <div className='text-title'>{t.sendSuppportSuccess}</div>
+                <div className='text-description'>{t.reContact}</div>
+                <div className='button button-outline mt-[30px]' onClick={() => router.push("/")}>
+                {t.backToHome}
+                </div>
+            </div>  
+    }
+
   </div>
   )
 }

@@ -22,8 +22,6 @@ $common-transition: 0.3s ease;
 
 .Faq {
   overflow: hidden;
-  display: flex;
-  flex-direction: column-reverse;
   @media (max-width: 991px) {
     padding: 9rem 0;
   }

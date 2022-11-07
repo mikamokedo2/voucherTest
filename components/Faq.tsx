@@ -93,7 +93,10 @@ const Support:React.FC<SupportProps> = ({isShow}) => {
   ];
   return (
     <div className={`container mx-auto ${!isShow ? "hidden" : "contact_faq Faq"}`}>
-        <div className="w-[100%] order-2 md:w-[80%] md:order-2">
+          <div className="w-[50%] flex justify-center items-start max-md:w-[100%] img-faq">
+          <img src="/assets/images/faq.png" alt="" />
+        </div>
+        <div className="w-[100%] md:w-[80%]">
           <p className="text-white title-faq">{t.faq}</p>
           <Collapse
             expandIconPosition="right"
@@ -160,9 +163,7 @@ const Support:React.FC<SupportProps> = ({isShow}) => {
             ))}
           </Collapse>
         </div>
-        <div className="w-[50%] order-1 flex justify-center items-start max-md:w-[100%] md:order-2 img-faq">
-          <img src="./faq.png" alt="" />
-        </div>
+
     </div>
   );
 };
