@@ -53,8 +53,8 @@ const Header = () => {
           </a>
         </div>
         {isConnected ? (
-          <div className="flex">
-            <div className="seclecBox_item mr-[10px] number-coin">
+          <div className="flex items-center">
+            <div className="mr-[10px] number-coin text-[#ACD9EE]">
               {new BigNumber(
                 new BigNumber(balance ?? 0)
                   .dividedBy(new BigNumber(10).pow(18))

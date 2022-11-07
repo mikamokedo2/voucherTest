@@ -74,9 +74,9 @@ const Home: NextPage = () => {
         <h1 className="title_name">{t.buyVoucher}</h1>
         <div className="wrap-desc">
           <div className="description">{t.description}</div>
-          <a href="/" onClick={() => warning(t.comming)}>
-            {t.all} <RightOutlined />
-          </a>
+          <div className="underline hover:text-[#ACD9EE] cursor-pointer text-white flex items-center" onClick={() => warning(t.comming)}>
+            {t.all} <span className="mb-[5px] ml-4px"><RightOutlined /></span>
+          </div>
         </div>
         <div className="flex gap-x-[10px] brach">
           <Tabs
@@ -123,7 +123,7 @@ const Home: NextPage = () => {
             <TabPanel>
               <div className="home-description">{t.shopdiDescription}</div>
               <div
-                className="seclecBox_item mt-[30px] w-[150px] mb-[100px] text-center"
+                className="button button-outline mt-[30px] w-[150px] mb-[100px] text-center"
                 onClick={() => {
                   if (address === "") {
                     message.warning(t.warningConnect);
