@@ -253,16 +253,33 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   }, [web3]);
 
   const afterRefresh = async(chain:string) =>{
-    const web3 = new Web3(window.ethereum);
-    const chainReal = await web3.eth.getChainId();
-    if((chain === "bsc" && chainReal === chainNumberBsc) || (chain === "kai" && chainReal === chainNumberKai)){
-      setWeb3(web3);
+    try {
+      const web3 = new Web3(window.ethereum);
       const [accounts] = await web3.eth.getAccounts();
-      web3.eth.defaultAccount = accounts;
-      setAddress(accounts);
-      setNetWork(chain);
+      const chainReal = await web3.eth.getChainId();
+      if(((chain === "bsc" && chainReal === chainNumberBsc) || (chain === "kai" && chainReal === chainNumberKai)) && accounts){
+        
+        setWeb3(web3);
+        const [accounts] = await web3.eth.getAccounts();
+        web3.eth.defaultAccount = accounts;
+        setAddress(accounts);
+        setNetWork(chain);
+      }
+      
+    } catch (error:any) {
+      if (error.code === 4001) {
+        console.log('Please connect to MetaMask.');
+      } else {
+        console.error(error);
+      }
     }
+
+
   }
+
+
+
+  
 
   useEffect(() =>{
     const chain = localStorage.getItem("voucher-chain");

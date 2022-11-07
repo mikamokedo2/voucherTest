@@ -68,7 +68,7 @@ const Header = () => {
               onMouseEnter={handleHover}
               onMouseLeave={handleLeaveHover}
             >
-              <div className="seclecBox_item">
+              {address &&               <div className="seclecBox_item">
                 <span className="uppercase">{`${address.slice(
                   0,
                   4
@@ -77,7 +77,8 @@ const Header = () => {
                   address.length
                 )}`}</span>
                 <DownOutlined />
-              </div>
+              </div>}
+
               <div className={` sub_menu ${isActive ? "active" : ""}`}>
                 <ul>
                   <li onClick={() => router.push("/support")}>
