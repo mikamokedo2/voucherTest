@@ -76,5 +76,7 @@ export default {
   disconnect:"Ngắt kết nối",
   forgotPhone:"Bạn quên nhập số điện thoại",
   email:"Bạn quên nhập email",
-  agreeDescription:"Bạn phải đồng ý với điều khoản của chúng tôi"
+  agreeDescription:"Bạn phải đồng ý với điều khoản của chúng tôi",
+  warningConnect:"Kết nối ví để tiếp tục!",
+  installMeta:"MetaMask chưa khả dụng. vui lòng tải và cài đặt:"
 };

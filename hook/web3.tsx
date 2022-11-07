@@ -13,6 +13,7 @@ import shodiContract from "./contract";
 import { Contract } from "web3-eth-contract";
 import axios from "axios";
 import { serverURL } from "../constants/const";
+import { useRouter } from "next/router";
 
 const chainIdKai = "0xF2";
 const chainIdBsc = "0x61";
@@ -23,6 +24,8 @@ const blockExplorerUrlsKai = "https://explorer-dev.kardiachain.io";
 const blockExplorerUrlsBsc = "https://testnet.bscscan.com";
 const chainNumberBsc = 97;
 const chainNumberKai = 242;
+import en from "../locales/en";
+import vn from "../locales/vn";
 
 interface ContextType {
   web3?: Web3;
@@ -63,6 +66,9 @@ interface AuthProviderProps {
 }
 
 const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
+  const router = useRouter();
+  const { locale } = router;
+  const t = locale === "en" ? en : vn;
   const [web3, setWeb3] = useState<Web3>();
   const [address, setAddress] = useState("");
   const [contract, setContract] = useState<Contract>();
@@ -153,9 +159,9 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         }
       }
     } else {
-      toast.error(
-        "MetaMask is not installed. Please install it to use this app: https://metamask.io/download.html"
-      );
+      toast.error(`
+        ${t.installMeta}"https://metamask.io/download.html"
+      `);
     }
   };
 
@@ -194,9 +200,9 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         }
       }
     } else {
-      toast.error(
-        "MetaMask is not installed. Please install it to use this app: https://metamask.io/download.html"
-      );
+      toast.error(`
+        ${t.installMeta}"https://metamask.io/download.html"
+      `);
     }
   };
 

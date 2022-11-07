@@ -88,7 +88,7 @@ const Home: NextPage = () => {
                 <CustomTab
                   onClick={() => {
                     if (address === "") {
-                      message.warning("Kết nối ví để tiếp tục!");
+                      message.warning(t.warningConnect);
                     } else {
                       setIsDisconnect && setIsDisconnect(true);
                     }
@@ -126,7 +126,7 @@ const Home: NextPage = () => {
                 className="seclecBox_item mt-[30px] w-[150px] mb-[100px] text-center"
                 onClick={() => {
                   if (address === "") {
-                    message.warning("Kết nối ví để tiếp tục!");
+                    message.warning(t.warningConnect);
                   } else {
                     setIsDisconnect && setIsDisconnect(true);
                   }

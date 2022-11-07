@@ -49,7 +49,7 @@ const Header = () => {
         <SelectLanguage />
         <div className="logo-head">
           <a href="/">
-          <img src="assets/images/logo-header.png"/>
+          <img src="/assets/images/logo-header.png"/>
           </a>
         </div>
         {isConnected ? (

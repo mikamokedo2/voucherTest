@@ -189,7 +189,7 @@ const Buy: React.FC<BuyProps> = ({
               onChange={formik.handleChange}
             ></input>
                         {formik.touched.phone && Boolean(formik.errors.phone) && (
-              <div className="text-red mt-2">{t.forgotPhone}</div>
+              <div className="text-red mt-2 text-sm">{t.forgotPhone}</div>
             )}
           </div>
           <div className="buyer__item">
@@ -207,7 +207,7 @@ const Buy: React.FC<BuyProps> = ({
               name="email"
             ></input>
                         {formik.touched.email && Boolean(formik.errors.email) && (
-              <div className="text-red mt-2">{formik.errors.email}</div>
+              <div className="text-red mt-2 text-sm">{formik.errors.email}</div>
             )}
           </div>
 
@@ -229,13 +229,13 @@ const Buy: React.FC<BuyProps> = ({
               </span>
             </span>
             {formik.touched.agree && Boolean(formik.errors.agree) && (
-              <div className="text-red mt-2">{formik.errors.agree}</div>
+              <div className="text-red mt-2 text-sm">{formik.errors.agree}</div>
             )}
             <button
               type="button"
               onClick={() => {
                 if (address === "") {
-                  message.warning("Kết nối ví để tiếp tục!");
+                  message.warning(t.warningConnect);
                 } else {
                   formik.handleSubmit();
                 }

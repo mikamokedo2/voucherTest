@@ -76,5 +76,7 @@ export default {
   disconnect:"Disconnect",
   forgotPhone:"You forgot input phone number",
   email:"You fogot input phone email",
-  agreeDescription:"You must agree with our condition"
+  agreeDescription:"You must agree with our condition",
+  warningConnect:"Please connect wallet!",
+  installMeta:"MetaMask is not installed. Please install it to use this app:"
 };
