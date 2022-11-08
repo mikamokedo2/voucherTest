@@ -50,6 +50,7 @@ const Buy: React.FC<BuyProps> = ({
     adminWallet,
     rateConvert,
     getAdminWallet,
+    wrongChain
   } = useWeb3();
   const increment = async () => {
     let num = count + 1;
@@ -140,6 +141,10 @@ const Buy: React.FC<BuyProps> = ({
         <img src="/assets/images/logo-header.png" alt="" />
       </div>
       <section className="main__mid">
+      {wrongChain && (
+              <div className="text-red mt-2 mb-5 text-sm text-center">{t.wrongChain}</div>
+            )}
+
         <section className={style["section-buyer"]}>
           <span className={style["buyer-name-val"]}>{t.amountVoucher}</span>
 
@@ -241,9 +246,11 @@ const Buy: React.FC<BuyProps> = ({
                 }
               }}
               className={style["button-buy"]}
+              disabled={wrongChain}
             >
               {t.buy}
             </button>
+
           </div>
         </section>
       </section>

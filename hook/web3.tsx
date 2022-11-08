@@ -30,7 +30,7 @@ import vn from "../locales/vn";
 interface ContextType {
   web3?: Web3;
   address: string;
-  connectMetamask?: (type:"kai" | "bsc") => void;
+  connectMetamask?: (type: "kai" | "bsc") => void;
   contract?: Contract;
   netWork: string;
   setNetWork?: Dispatch<SetStateAction<string>>;
@@ -39,9 +39,10 @@ interface ContextType {
   balance: number;
   fetchBalance?: () => void;
   getAdminWallet?: () => Promise<any>;
-  logOut?:() => void;
-  isDisconnect:boolean;
-  setIsDisconnect?:Dispatch<SetStateAction<boolean>>;
+  logOut?: () => void;
+  isDisconnect: boolean;
+  setIsDisconnect?: Dispatch<SetStateAction<boolean>>;
+  wrongChain:boolean;
 }
 const initialState: ContextType = {
   web3: undefined,
@@ -51,8 +52,8 @@ const initialState: ContextType = {
   adminWallet: "",
   rateConvert: 1,
   balance: 0,
-  isDisconnect:false,
-  
+  isDisconnect: false,
+  wrongChain:false
 };
 
 export const AuthContext = createContext(initialState);
@@ -78,6 +79,7 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [rateConvert, setRateConvert] = useState(1);
   const [balance, setBalance] = useState(0);
   const [isDisconnect, setIsDisconnect] = useState(false);
+  const [wrongChain, setWrongChain] = useState(false);
   
 
   const getAdminWallet = useCallback(async () => {
@@ -110,7 +112,7 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     setContract(shodiContract(web3, contractWallet));
   }, [web3, contractWallet]);
 
-  const handleConnectSuccess = async (type:"kai" | "bsc") => {
+  const handleConnectSuccess = async (type: "kai" | "bsc") => {
     if (window.ethereum) {
       await window.ethereum.request({ method: "eth_requestAccounts" });
       const web3 = new Web3(window.ethereum);
@@ -119,7 +121,7 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         const [accounts] = await web3.eth.getAccounts();
         web3.eth.defaultAccount = accounts;
         setAddress(accounts);
-        localStorage.setItem("voucher-chain",type)
+        localStorage.setItem("voucher-chain", type);
       }
     }
   };
@@ -219,7 +221,7 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     setWeb3(web3);
   };
 
-  const connectMetamask = async (type:"kai" | "bsc") => {
+  const connectMetamask = async (type: "kai" | "bsc") => {
     if (type === "kai") {
       switchNetworkKai();
     } else {
@@ -230,71 +232,103 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     if (!contract || address === "") {
       return;
     }
-    const result = await contract.methods.balanceOf(address).call();
-    setBalance(result);
+    try {
+      const result = await contract.methods.balanceOf(address).call();
+      setBalance(result);
+    } catch (error) {
+      console.log(error)
+    }
   };
 
   useEffect(() => {
     fetchBalance();
   }, [contract, address]);
 
-  useEffect(() => {
-    if (window.ethereum) {
-      window.ethereum.on("accountsChanged", function () {
-        if (!web3) {
-          return;
-        }
-        web3.eth.getAccounts(function (error, accounts) {
-          setAddress(accounts[0]);
-          web3.eth.defaultAccount = accounts[0];
-        });
-      });
-    }
-  }, [web3]);
+  const logOut = () => {
+    setWeb3(undefined);
+    setAddress("");
+    setNetWork("");
+    localStorage.removeItem("voucher-chain");
+    setIsDisconnect(false);
+    setBalance(0);
+  };
 
-  const afterRefresh = async(chain:string) =>{
+  useEffect(() => {
+    if (!window.ethereum) {
+      return;
+    }
+
+    const accountWasChanged = async(accounts: string[]) => {
+      if(accounts && accounts.length > 0){
+        window.ethereum
+        .request({ method: 'eth_requestAccounts' })
+        .then((e:any) =>{
+          setAddress(accounts[0]);
+        })
+        .catch((err:any) => {
+          if (err.code === 4001) {
+            console.log('Please connect to MetaMask.');
+          } else {
+            logOut();
+          }
+        });
+      }else{
+        logOut();
+      }
+  
+    };
+    const handleSwitchChain = (e:string) =>{
+      if(e.toLocaleLowerCase() !== chainIdKai.toLocaleLowerCase() && e.toLocaleLowerCase() !== chainIdBsc.toLocaleLowerCase()){
+        setWrongChain(true);
+      }else{
+        setWrongChain(false);
+       
+      }
+    }
+
+
+    window.ethereum.on("accountsChanged", accountWasChanged);
+    window.ethereum.on('chainChanged',handleSwitchChain)
+    return () => {
+  
+      window.ethereum.removeListener("accountsChanged", accountWasChanged);
+      window.ethereum.removeListener("chainChanged", handleSwitchChain);
+    };
+  }, []);
+
+  const afterRefresh = async (chain: string) => {
     try {
       const web3 = new Web3(window.ethereum);
       const [accounts] = await web3.eth.getAccounts();
       const chainReal = await web3.eth.getChainId();
-      if(((chain === "bsc" && chainReal === chainNumberBsc) || (chain === "kai" && chainReal === chainNumberKai)) && accounts){
-        
+      if (
+        ((chain === "bsc" && chainReal === chainNumberBsc) ||
+          (chain === "kai" && chainReal === chainNumberKai)) &&
+        accounts
+      ) {
         setWeb3(web3);
         const [accounts] = await web3.eth.getAccounts();
         web3.eth.defaultAccount = accounts;
         setAddress(accounts);
         setNetWork(chain);
       }
-      
-    } catch (error:any) {
+    } catch (error: any) {
       if (error.code === 4001) {
-        console.log('Please connect to MetaMask.');
+        console.log("Please connect to MetaMask.");
       } else {
         console.error(error);
       }
     }
+  };
 
-
-  }
-
-
-
-  
-
-  useEffect(() =>{
+  useEffect(() => {
     const chain = localStorage.getItem("voucher-chain");
-    if(chain && window.ethereum){
+    if (chain && window.ethereum) {
       afterRefresh(chain);
     }
-  },[]);
+  }, []);
 
-  const logOut = () =>{
-    setWeb3(undefined);
-    setAddress("");
-    setNetWork("");
-    localStorage.removeItem("voucher-chain");
-    setIsDisconnect(false);
-  }
+
 
   return (
     <AuthContext.Provider
@@ -312,7 +346,8 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         getAdminWallet,
         logOut,
         isDisconnect,
-        setIsDisconnect
+        setIsDisconnect,
+        wrongChain
       }}
     >
       {children}
