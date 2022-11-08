@@ -298,18 +298,16 @@ a.btn__main:hover{
 }
 
 .contact__item {
-    margin-bottom: 32px;
+    margin-bottom: 30px;
 }
 
-.contact__item div {
+.contact__item .title {
     color: #ffffff;
     margin-bottom: 16px;
     font-style: normal;
     font-weight: 600;
     font-size: 22px;
     line-height: 135%;
-
-
     text-align: left;
 }
 

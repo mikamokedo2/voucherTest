@@ -9,12 +9,7 @@ import en from "../locales/en";
 import vn from "../locales/vn";
 import { serverURL } from '../constants/const';
 
-export const validationPhoneSchema = yup.object({
-  phone: yup.string().required("Bạn chưa nhập số điện thoại"),
-  email: yup.string().required("Bạn chưa nhập số điện thoại"),
-  address: yup.string().required("Bạn chưa nhập số điện thoại"),
-  description: yup.string().required("Bạn chưa nhập số điện thoại"),
-});
+
 
 
 const Support = () => {
@@ -23,6 +18,15 @@ const Support = () => {
   const t = locale === "en" ? en : vn;
   const [showSuccess,setShowSuccess] = useState(false);
   const [isLoading,setIsLoading] = useState(false);
+
+
+  const validationPhoneSchema = yup.object({
+    phone: yup.string().required(t.forgotPhone),
+    email: yup.string().required(t.email),
+    address: yup.string().required(t.forgotWallet),
+    description: yup.string().required(t.forgotDescription),
+  });
+
   const formik = useFormik({
     initialValues: {
       phone: "",
@@ -56,7 +60,7 @@ const Support = () => {
             <img src="/assets/images/mail.png" alt="" /> 
             <p className="text-white">{t.support}</p>
             <div className="contact__item">
-              <div className="">{t.phoneNumber}:</div>
+              <div className="title">{t.phoneNumber}:</div>
               <input
                 type="text"
                 placeholder={t.phoneNumber}
@@ -64,9 +68,13 @@ const Support = () => {
                 name="phone"
                 onChange={formik.handleChange}
               />
+                          {formik.touched.phone && Boolean(formik.errors.phone) && (
+              <div className="text-red mt-2">{formik.errors.phone}</div>
+            )}
             </div>
+
             <div className="contact__item">
-              <div className="">{t.formEmail} :</div>
+              <div className="title">{t.formEmail} :</div>
               <input
                 type="text"
                 placeholder={t.formEmail}
@@ -75,9 +83,13 @@ const Support = () => {
                 onChange={formik.handleChange}
                 
               />
+                          {formik.touched.email && Boolean(formik.errors.email) && (
+              <div className="text-red mt-2">{formik.errors.email}</div>
+            )}
             </div>
+
             <div className="contact__item">
-              <div className="">{t.addressWallet} :</div>
+              <div className="title">{t.addressWallet} :</div>
               <input
                 type="text"
                 placeholder={t.addressWallet}
@@ -86,9 +98,13 @@ const Support = () => {
                 onChange={formik.handleChange}
                 
               />
+                          {formik.touched.address && Boolean(formik.errors.address) && (
+              <div className="text-red mt-2">{formik.errors.address}</div>
+            )}
             </div>
+
             <div className="contact__item">
-              <div className="">{t.descriptionSupport} :</div>
+              <div className="title">{t.descriptionSupport} :</div>
               <textarea
                 placeholder={t.descriptionSupport}
                 rows={5}
@@ -96,7 +112,11 @@ const Support = () => {
                 name="description"
                 onChange={formik.handleChange}
               />
+                          {formik.touched.description && Boolean(formik.errors.description) && (
+              <div className="text-red mt-2">{formik.errors.description}</div>
+            )}
             </div>
+
             <button className="btn__main w-[100%] mb-[100px] font-bold" onClick={() => formik.handleSubmit()} disabled={isLoading}>{t.send}</button>
             </div>
             :
