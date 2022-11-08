@@ -142,7 +142,7 @@ const Buy: React.FC<BuyProps> = ({
       </div>
       <section className="main__mid">
       {wrongChain && (
-              <div className="text-red mt-2 mb-5 text-sm text-center">{t.wrongChain}</div>
+              <div className="text-red mt-2 mb-5 text-center">{t.wrongChain}</div>
             )}
 
         <section className={style["section-buyer"]}>

@@ -18,7 +18,7 @@ const Footer = () => {
           <div className="uppercase text-sm mb-[16px] font-bold">{t.language}</div>
           <div className="flex text-sm items-center mb-[12px]">
             <img src="/assets/images/vietnam.png" className="mr-[10px]" />
-            Tiếng Việt
+            {t.vietnam}
           </div>
           <div className="flex text-sm items-center">
             <img src="/assets/images/eng.png" className="mr-[10px]" />
