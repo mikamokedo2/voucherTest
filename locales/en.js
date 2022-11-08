@@ -14,7 +14,7 @@ export default {
   disconnect:"Disconnect",
   connectWallet:"CONNECT WALLET",
   inBuyProgress:"Progressing",
-  noteProgress:"Please do not F5 while transaction proccessing.",
+  noteProgress:"Please do not F5 while transaction processing.",
   support:"support",
   phoneNumber:"Send voucher to phone number (*)",
   formEmail: "Send voucher to email (*) *",
